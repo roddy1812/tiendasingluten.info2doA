@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Sin Gluten | Inicio</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f8f2;
+            color: #333;
+        }
+
+        /* NAVEGACIÓN */
+
+        header {
+            background-color: #315c43;
+            color: white;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 26px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+        }
+
+        /* PORTADA */
+
+        .portada {
+            text-align: center;
+            padding: 90px 20px;
+            background-color: #e6eddf;
+        }
+
+        .portada h2 {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: #315c43;
+        }
+
+        .portada p {
+            font-size: 18px;
+            margin-bottom: 25px;
+        }
+
+        .boton {
+            background-color: #315c43;
+            color: white;
+            padding: 13px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        /* PRODUCTOS */
+
+        .productos {
+            padding: 60px 8%;
+            text-align: center;
+        }
+
+        .productos h2 {
+            font-size: 30px;
+            margin-bottom: 35px;
+        }
+
+        .contenedor {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .producto {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .producto .boton {
+            margin-top: auto;
+        }
+
+        .producto img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .producto h3 {
+            margin: 15px 0 10px;
+        }
+
+        .precio {
+            color: #315c43;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* CONTACTO */
+
+        .contacto {
+            background-color: #e6eddf;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .contacto h2 {
+            margin-bottom: 18px;
+        }
+
+        .contacto p {
+            margin: 8px 0;
+        }
+
+        .productos hr {
+            margin: 35px 0;
+            border: 0;
+            border-top: 1px solid #d5ddcf;
+        }
+
+        footer {
+            background-color: #315c43;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* CARRITO */
+
+        .carrito {
+            padding: 60px 8%;
+            background-color: #e6eddf;
+        }
+
+        .carrito h2 {
+            font-size: 30px;
+            text-align: center;
+            margin-bottom: 35px;
+            color: #315c43;
+        }
+
+        .carrito-lista {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .carrito-item {
+            display: grid;
+            grid-template-columns: 1fr 140px 60px;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .carrito-item span:nth-child(2) {
+            text-align: right;
+        }
+
+        .carrito-item button {
+            width: 60px;
+            justify-self: end;
+        }
+
+        .carrito-item button {
+            background-color: #c0392b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+
+        .carrito-vacio {
+            text-align: center;
+            color: #777;
+            padding: 20px 0;
+        }
+
+        .carrito-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 20px;
+            color: #315c43;
+            margin-top: 20px;
+        }
+
+        .carrito-acciones {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .boton-secundario {
+            background-color: #777;
+        }
+
+        .titulo-categoria {
+            text-align: center;
+            font-size: 26px;
+            margin: 25px 0;
+            color: #315c43;
+        }
+
+        /* VENTANA DE CUENTA */
+
+        .btn-cuenta {
+            color: white;
+            background: none;
+            border: 1px solid white;
+            border-radius: 5px;
+            padding: 6px 14px;
+            margin-left: 25px;
+            cursor: pointer;
+        }
+
+        .modal-fondo {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .modal-fondo.abierto {
+            display: flex;
+        }
+
+        .modal {
+            position: relative;
+            width: 340px;
+            max-width: 90%;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+        }
+
+        .modal-cerrar {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: #777;
+            z-index: 2;
+        }
+
+        .modal-pistas {
+            display: flex;
+            width: 200%;
+            transition: transform 0.3s ease;
+        }
+
+        .modal-pistas.confirmando {
+            transform: translateX(-50%);
+        }
+
+        .modal-vista {
+            width: 50%;
+            padding: 35px 25px;
+            text-align: center;
+        }
+
+        .modal-vista h3 {
+            color: #315c43;
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: #315c43;
+            color: white;
+            font-size: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 15px;
+        }
+
+        .etiqueta {
+            font-size: 13px;
+            color: #777;
+        }
+
+        .nombre-usuario {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 5px 0 25px;
+        }
+
+        .boton-rojo {
+            background-color: #c0392b;
+        }
+
+        .confirmar-botones {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 0 7px;
+            }
+
+            .portada h2 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Tienda Sin Gluten</h1>
+
+        <nav>
+            <a href="#inicio">Inicio</a>
+            <a href="#productos">Productos</a>
+            <a href="#carrito">Carrito (<span id="contador-carrito">0</span>)</a>
+            <a href="#contacto">Contacto</a>
+            <button class="btn-cuenta" onclick="abrirCuenta()">👤 Mi cuenta</button>
+        </nav>
+    </header>
+
+    <section class="portada" id="inicio">
+        <h2>Alimentación sin gluten</h2>
+
+        <p>
+            Descubre una variedad de productos deliciosos
+            especialmente seleccionados para ti.
+        </p>
+
+        <a href="#productos" class="boton">
+            Ver productos
+        </a>
+    </section>
+
+    <section class="productos" id="productos">
+
+    <h2>Nuestros productos</h2>
+
+    <h2 class="titulo-categoria">Productos Dulces</h2>
+
+    <div class="contenedor">
+
+        <div class="producto">
+            <img src="https://snapcalorie-webflow-website.s3.us-east-2.amazonaws.com/media/food_pics_v2/medium/alfajor_dulce_de_leche.jpg" alt="Alfajor">
+            <h3>ALfajor</h3>
+            <p class="precio">Gs. 5.000 c/ uno</p>
+            <button class="boton" onclick="agregar('Alfajor', 5000)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto">
+            <img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=500" alt="Galletitas">
+            <h3>Galletitas</h3>
+            <p class="precio">Gs. 5.000</p>
+            <button class="boton" onclick="agregar('Galletitas', 5000)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto">
+            <img src="https://images.rawpixel.com/image_social_landscape/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDI0LTAyL3Jhd3BpeGVsX29mZmljZV80M19waG90b19vZl90d29fZnVkZ3lfYnJvd25pZXNfX2lzb2xhdGVkX29uX3doaV9iNGQyNmJjMC1hZmU3LTQ1ZGMtOTRjZi01MzEyZDQzMGEyN2MuanBn.jpg" alt="Brownie">
+            <h3>Brownie</h3>
+            <p class="precio">Gs. 4.000</p>
+            <button class="boton" onclick="agregar('Brownie', 4000)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto">
+            <img src="https://laopinionaustral.com.ar/media/uploads/2025/09/pasta-frola-receta-728x728.webp" alt="Pastafrola">
+            <h3>Pastafrola</h3>
+            <p class="precio">Gs. 4.000</p>
+            <button class="boton" onclick="agregar('Pastafrola', 4000)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto">
+            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500" alt="Torta">
+            <h3>Torta de Marmolada</h3>
+            <p class="precio">Gs. 50.000</p>
+            <button class="boton" onclick="agregar('Torta de Marmolada', 50000)">Agregar al carrito</button>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <h2 class="titulo-categoria">Salados</h2>
+
+    <div class="contenedor">
+
+        <div class="producto">
+            <img src="https://snapcalorie-webflow-website.s3.us-east-2.amazonaws.com/media/food_pics_v2/medium/veggie_sandwich.jpg" alt="Sandwich de verduras">
+            <h3>Sandwich de Verdura</h3>
+            <p class="precio">Gs. 4.000</p>
+            <button class="boton" onclick="agregar('Sandwich de Verdura', 4000)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto">
+            <img src="https://s.yimg.com/ny/api/res/1.2/qAJoajyEAfWxiL2oBaKdFQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTk2MDtjZj13ZWJw/https%3A/media.zenfs.com/en/parade_250/8d260067aebd3ebc8f4833b5350e76ad" alt="Empanadas">
+            <h3>Empanadas</h3>
+            <p class="precio">Gs. 5.000</p>
+            <button class="boton" onclick="agregar('Empanadas', 5000)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto">
+            <img src="https://www.robineau.co.uk/assets/images/product/2754.jpg" alt="Tarta salada">
+            <h3>Tartas</h3>
+            <p class="precio">Gs. 4.000</p>
+            <button class="boton" onclick="agregar('Tartas', 4000)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto">
+            <img src="https://www.instacart.com/assets/domains/product-image/file/large_fbc8ce83-7f5c-4e54-8b6e-63f76864bd2c.jpg" alt="Pizza sin gluten">
+            <h3>Pizzeta Sin Gluten</h3>
+            <p class="precio">Gs. 5.000</p>
+            <button class="boton" onclick="agregar('Pizzeta Sin Gluten', 5000)">Agregar al carrito</button>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <h2 class="titulo-categoria">Harinas</h2>
+
+    <div class="contenedor">
+
+        <div class="producto">
+            <img src="https://digitalcontent.api.tesco.com/v2/media/ghs/2872abcd-3e14-4465-8977-7fe918aa2f84/22703f29-05c0-4149-b6b3-fe7055997edf_915223545.jpeg" alt="Premezcla de pan">
+            <h3>Premezcla de Pan (500 g.)</h3>
+            <p class="precio">Gs. 25.000</p>
+            <button class="boton" onclick="agregar('Premezcla de Pan (500 kg.)', 25000)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto">
+            <img src="https://digitalcontent.api.tesco.com/v2/media/ghs/2872abcd-3e14-4465-8977-7fe918aa2f84/22703f29-05c0-4149-b6b3-fe7055997edf_915223545.jpeg" alt="Premezcla de pan">
+            <h3>Premezcla de Pan (1 kg.)</h3>
+            <p class="precio">Gs. 40.000</p>
+            <button class="boton" onclick="agregar('Premezcla de Pan (1 kg.)', 40000)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto">
+            <img src="Imagenes/harina de arroz.jpg" alt="Harina de arroz">
+            <h3>Harina de Arroz (500 g.)</h3>
+            <p class="precio">Gs. 12.000</p>
+            <button class="boton" onclick="agregar('Harina de Arroz (500 g.)', 12000)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto">
+            <img src="Imagenes/harina de arroz.jpg" alt="Harina de arroz">
+            <h3>Harina de Arroz (1 kg.)</h3>
+            <p class="precio">Gs. 20.000</p>
+            <button class="boton" onclick="agregar('Harina de Arroz (1 kg.)', 20000)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto">
+            <img src="https://rhbulk.com/cdn/shop/files/RHBulk_Yellow-Corn-Flour-Flat.jpg?v=1776446293" alt="Harina de maíz">
+            <h3>Harina de Maiz (500 g.)</h3>
+            <p class="precio">Gs. 8.000</p>
+            <button class="boton" onclick="agregar('Harina de Maiz (500 g.)', 8000)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto">
+            <img src="https://rhbulk.com/cdn/shop/files/RHBulk_Yellow-Corn-Flour-Flat.jpg?v=1776446293" alt="Harina de maíz">
+            <h3>Harina de Maiz (1 kg.)</h3>
+            <p class="precio">Gs. 14.000</p>
+            <button class="boton" onclick="agregar('Harina de Maiz (1 kg.)', 14000)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto">
+            <img src="https://cdn.ekokoza.com/images/0/686f8a9ab37a3126/2/micronized-rice-powder-rice-starch-5kg.webp?hash=1108330435" alt="Almidón de arroz">
+            <h3>Almidon de Arroz (500 g.)</h3>
+            <p class="precio">Gs. 6.000</p>
+            <button class="boton" onclick="agregar('Almidon de Arroz (500 g.)', 6000)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto">
+            <img src="https://cdn.ekokoza.com/images/0/686f8a9ab37a3126/2/micronized-rice-powder-rice-starch-5kg.webp?hash=1108330435" alt="Almidón de arroz">
+            <h3>Almidon de Arroz (1 kg.)</h3>
+            <p class="precio">Gs. 11.000</p>
+            <button class="boton" onclick="agregar('Harina de Arroz (1 kg.)', 11000)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto">
+            <img src="Imagenes/almidon de mandioca.jpg" alt="Almidón de mandioca">
+            <h3>Almidon de Mandioca (500 g.)</h3>
+            <p class="precio">Gs. 6.500</p>
+            <button class="boton" onclick="agregar('Almidon de Mandioca (500 g.)', 6500)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto">
+            <img src="Imagenes/almidon de mandioca.jpg" alt="Almidón de mandioca">
+            <h3>Almidon de Mandioca (1 kg.)</h3>
+            <p class="precio">Gs. 11.000</p>
+            <button class="boton" onclick="agregar('Almidon de Mandioca (1 kg.)', 11000)">Agregar al carrito</button>
+        </div>
+
+    </div>
+</section>
+
+    <section class="carrito" id="carrito">
+        <h2>Mi carrito</h2>
+
+        <div class="carrito-lista">
+            <div id="carrito-items">
+                <p class="carrito-vacio">Tu carrito está vacío.</p>
+            </div>
+
+            <div class="carrito-total">
+                <span>Total:</span>
+                <span id="carrito-total">Gs. 0</span>
+            </div>
+
+            <div class="carrito-acciones">
+                <a href="pago.html" id="btn-pagar" class="boton" style="margin-right: 10px; text-decoration: none;">
+                    Ir a pagar
+                </a>
+                <button class="boton boton-secundario" onclick="vaciarCarrito()">
+                    Vaciar carrito
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="contacto" id="contacto">
+        <h2>Contáctanos</h2>
+        <p>Estamos aquí para ayudarte.</p>
+        <p>Email: contacto@tiendasingluten.com</p>
+        <p>Telefono: 0981 234567</p>
+    </section>
+
+    <footer>
+        <p>© 2026 Tienda Sin Gluten</p>
+        <p>Todos los derechos reservados.</p>
+    </footer>
+
+    <div class="modal-fondo" id="modal-cuenta" onclick="if(event.target===this) cerrarCuenta()">
+        <div class="modal">
+            <button class="modal-cerrar" onclick="cerrarCuenta()">×</button>
+
+            <div class="modal-pistas" id="modal-pistas">
+
+                <!-- Ventana 1: Mi cuenta -->
+                <div class="modal-vista">
+                    <h3>Mi cuenta</h3>
+                    <div class="avatar" id="cuenta-avatar">?</div>
+                    <p class="etiqueta">Sesión iniciada como</p>
+                    <p class="nombre-usuario" id="cuenta-usuario">Invitado</p>
+                    <p class="etiqueta" id="cuenta-telefono" style="margin: -18px 0 25px;"></p>
+                    <button class="boton boton-rojo" onclick="mostrarConfirmacion()">Cerrar sesión</button>
+                </div>
+
+                <!-- Ventana 2: Confirmación -->
+                <div class="modal-vista">
+                    <h3>¿Cerrar sesión?</h3>
+                    <p>¿Estás seguro de que quieres cerrar sesión?</p>
+                    <div class="confirmar-botones">
+                        <button class="boton boton-rojo" onclick="cerrarSesion()">Sí, cerrar sesión</button>
+                        <button class="boton boton-secundario" onclick="volverCuenta()">No</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+        function formatearPrecio(numero) {
+            return 'Gs. ' + numero.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+
+        function guardarCarrito() {
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+            mostrarCarrito();
+        }
+
+        function agregar(producto, precio) {
+            carrito.push({ nombre: producto, precio: precio });
+            guardarCarrito();
+        }
+
+        function eliminar(indice) {
+            carrito.splice(indice, 1);
+            guardarCarrito();
+        }
+
+        function vaciarCarrito() {
+            carrito = [];
+            guardarCarrito();
+        }
+
+        function mostrarCarrito() {
+            const contenedor = document.getElementById('carrito-items');
+            contenedor.innerHTML = '';
+
+            if (carrito.length === 0) {
+                contenedor.innerHTML = '<p class="carrito-vacio">Tu carrito está vacío.</p>';
+            }
+
+            let total = 0;
+
+            carrito.forEach((item, i) => {
+                total += item.precio;
+
+                const div = document.createElement('div');
+                div.className = 'carrito-item';
+                div.innerHTML = `
+                    <span>${item.nombre}</span>
+                    <span>${formatearPrecio(item.precio)}</span>
+                    <button onclick="eliminar(${i})">Quitar</button>
+                `;
+                contenedor.appendChild(div);
+            });
+
+            document.getElementById('carrito-total').textContent = formatearPrecio(total);
+            document.getElementById('contador-carrito').textContent = carrito.length;
+        }
+
+        // VENTANA DE CUENTA
+        function abrirCuenta() {
+            const sesion = JSON.parse(localStorage.getItem('sesion'));
+
+            // Si no hay sesión iniciada, lo mandamos al login
+            if (!sesion) {
+                window.location.href = 'registro.html';
+                return;
+            }
+
+            document.getElementById('cuenta-usuario').textContent = sesion.nombre;
+            document.getElementById('cuenta-telefono').textContent = sesion.telefono;
+            document.getElementById('cuenta-avatar').textContent = sesion.nombre.charAt(0).toUpperCase();
+            document.getElementById('modal-pistas').classList.remove('confirmando');
+            document.getElementById('modal-cuenta').classList.add('abierto');
+        }
+
+        function cerrarCuenta() {
+            document.getElementById('modal-cuenta').classList.remove('abierto');
+        }
+
+        function mostrarConfirmacion() {
+            document.getElementById('modal-pistas').classList.add('confirmando');
+        }
+
+        function volverCuenta() {
+            document.getElementById('modal-pistas').classList.remove('confirmando');
+        }
+
+        function cerrarSesion() {
+            localStorage.removeItem('sesion');
+            window.location.href = 'registro.html';
+        }
+        // Muestra el carrito al cargar la página
+        mostrarCarrito();
+    </script>
+
+</body>
+</html>
