@@ -1,0 +1,622 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tienda Sin Gluten | Administración</title>
+<style>
+:root{--fondo:#f8f8f2;--tarjeta:#fff;--texto:#333;--verde:#315c43;--verde-claro:#e6eddf;--borde:#d5ddcf;--secundario:#687269;--campo:#fff;--peligro:#a33b35;--sombra:0 3px 12px #0000000d}
+body.oscuro{--fondo:#171e19;--tarjeta:#29362d;--texto:#e1e8e1;--verde:#b4cfb8;--verde-claro:#263b2d;--borde:#46554a;--secundario:#b8c4ba;--campo:#1d2821;--peligro:#ffaaa3}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fondo);color:var(--texto);font:15px Arial,sans-serif;transition:.2s}
+header{background:#315c43;color:#fff;padding:18px 4%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+header h1{font-size:22px;margin:0}
+.acciones{display:flex;gap:9px;flex-wrap:wrap}
+button,a{cursor:pointer}
+button{font:inherit}
+.btn{border:0;border-radius:6px;padding:10px 14px;background:#315c43;color:white;text-decoration:none;display:inline-block}
+.btn:hover{opacity:.88}
+.btn-sec{background:#687269}
+.btn-outline{background:transparent;color:white;border:1px solid #d0ddd2;border-radius:6px;padding:9px 12px;text-decoration:none}
+.btn-danger{background:#a33b35}
+.btn-small{padding:7px 9px;font-size:12px;margin:2px}
+.oculto{display:none!important}
+main{width:94%;max-width:1500px;margin:28px auto}
+.card{background:var(--tarjeta);padding:20px;border-radius:10px;box-shadow:var(--sombra);margin-bottom:20px}
+.login{max-width:440px;margin:55px auto}
+.login h2{color:var(--verde)}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:13px}
+.field label{font-size:13px;font-weight:bold}
+input,select{width:100%;padding:10px;border:1px solid var(--borde);border-radius:5px;background:var(--campo);color:var(--texto);font:inherit}
+input:focus,select:focus{outline:2px solid #8caf91}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.tab{background:var(--tarjeta);color:var(--texto);border:1px solid var(--borde);border-radius:6px;padding:11px 16px}
+.tab.activa{background:var(--verde);color:white;border-color:var(--verde)}
+.heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.heading h2,.heading h3{margin:0;color:var(--verde)}
+.muted{color:var(--secundario)}
+.grid-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:20px}
+.stat{background:var(--tarjeta);border:1px solid var(--borde);border-left:4px solid #63876b;border-radius:8px;padding:18px}
+.stat p{margin:0 0 10px;color:var(--secundario);font-size:13px}
+.stat strong{font-size:24px;color:var(--verde)}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.tools input{max-width:360px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{text-align:left;padding:11px;border-bottom:1px solid var(--borde);font-size:13px;vertical-align:top}
+th{background:var(--verde-claro);white-space:nowrap}
+tbody tr:hover{background:var(--verde-claro)}
+.pill{display:inline-block;padding:4px 8px;border-radius:20px;font-size:12px;background:var(--verde-claro)}
+.pill.off{background:#f4eeec;color:#a33b35}
+.notice{padding:12px;border-radius:6px;margin:12px 0;display:none}
+.notice.error{display:block;background:#f4eeec;color:#a33b35}
+.notice.ok{display:block;background:var(--verde-claro);color:var(--verde)}
+.empty{text-align:center;padding:25px;color:var(--secundario)}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.form-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
+.filters .field{min-width:180px;flex:1}
+footer{text-align:center;color:var(--secundario);padding:25px}
+@media(max-width:750px){
+.grid-stats{grid-template-columns:1fr}
+.form-grid{grid-template-columns:1fr}
+main{width:96%;margin-top:18px}
+.card{padding:14px}
+header{align-items:flex-start;flex-direction:column}
+}
+
+.acciones .icono-circular {
+    width: 42px;
+    height: 42px;
+    padding: 9px;
+    border: 1px solid #ffffff;
+    border-radius: 50%;
+    background: transparent;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.acciones .icono-circular svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.acciones .icono-circular:hover {
+    background: #ffffff26;
+}
+
+.acciones .icono-circular:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+}
+
+#btn-tema svg {
+    display: block;
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+}
+</style>
+</head>
+<body>
+<header>
+<h1>Tienda Sin Gluten | Administración</h1>
+
+<div class="acciones">
+    <button class="btn-tema icono-circular" id="btn-tema"
+            type="button" aria-label="Cambiar tema" title="Cambiar tema">
+        <svg id="icono-tema" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>
+        </svg>
+    </button>
+
+    <a class="btn-outline icono-circular" href="/"
+       aria-label="Volver a la tienda" title="Volver a la tienda">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 10.5 12 3l9 7.5M5.5 9v11h13V9M9 20v-7h6v7"/>
+        </svg>
+    </a>
+
+    <button class="btn-outline icono-circular oculto" id="btn-salir"
+            type="button" aria-label="Cerrar sesión" title="Cerrar sesión">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M10 17l5-5-5-5M15 12H3"/>
+            <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7"/>
+        </svg>
+    </button>
+</div>
+</header>
+
+<section id="acceso" class="card login">
+<h2>Acceso administrativo</h2>
+<p class="muted">Inicia sesión para administrar clientes, pedidos y productos.</p>
+<div id="error-login" class="notice" role="alert"></div>
+<form id="form-login">
+<div class="field">
+<label for="usuario">Usuario administrador</label>
+<input id="usuario" autocomplete="username" required>
+</div>
+<div class="field">
+<label for="contrasena">Contraseña</label>
+<input id="contrasena" type="password" autocomplete="current-password" required>
+</div>
+<button class="btn" type="submit">Iniciar sesión</button>
+</form>
+</section>
+
+<main id="panel" class="oculto">
+<div class="heading">
+<div>
+<h2>Panel de administración</h2>
+<p class="muted">Gestiona usuarios, compras, productos y estadísticas.</p>
+</div>
+<button class="btn btn-sec" id="btn-actualizar">Actualizar datos</button>
+</div>
+
+<div id="error-panel" class="notice" role="alert"></div>
+<div id="ok-panel" class="notice" role="status"></div>
+
+<nav class="tabs" aria-label="Secciones administrativas">
+<button class="tab activa" data-tab="usuarios">Usuarios</button>
+<button class="tab" data-tab="compras">Compras</button>
+<button class="tab" data-tab="productos">Productos</button>
+<button class="tab" data-tab="estadisticas">Estadísticas</button>
+</nav>
+
+<section class="tab-content" id="tab-usuarios">
+<div class="card">
+<div class="heading">
+<h3>Usuarios registrados</h3>
+<span id="cuenta-usuarios" class="muted">0 usuarios</span>
+</div>
+<div class="tools">
+<input id="buscar-usuario" type="search" placeholder="Buscar por nombre, teléfono, RUC o ID">
+<select id="filtro-estado-usuario" aria-label="Filtrar usuarios">
+<option value="todos">Todos los estados</option>
+<option value="activos">Activos</option>
+<option value="inactivos">Desactivados</option>
+</select>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th>ID</th><th>Nombre</th><th>Teléfono</th><th>Dirección</th><th>RUC</th><th>Estado</th><th>Acciones</th></tr></thead>
+<tbody id="tabla-usuarios"></tbody>
+</table>
+</div>
+<p id="vacio-usuarios" class="empty oculto">No se encontraron usuarios.</p>
+</div>
+<div id="historial-cliente" class="card oculto">
+<div class="heading">
+<h3 id="titulo-historial">Historial de compras</h3>
+<button class="btn btn-sec" id="cerrar-historial">Cerrar</button>
+</div>
+<div id="contenido-historial"></div>
+</div>
+</section>
+
+<section class="tab-content oculto" id="tab-compras">
+<div class="card">
+<div class="heading">
+<h3>Pedidos y ventas</h3>
+<span id="cuenta-pedidos" class="muted">0 pedidos</span>
+</div>
+<div class="tools">
+<input id="buscar-pedido" type="search" placeholder="Buscar por pedido, cliente, producto o dirección">
+<input id="fecha-desde" type="date" aria-label="Fecha desde">
+<input id="fecha-hasta" type="date" aria-label="Fecha hasta">
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Pedido</th><th>Fecha</th><th>Cliente</th><th>Productos</th><th>Categorías</th><th>Dirección</th><th>Pago</th><th>Total</th></tr></thead>
+<tbody id="tabla-pedidos"></tbody>
+</table>
+</div>
+<p id="vacio-pedidos" class="empty oculto">No hay pedidos que coincidan.</p>
+</div>
+</section>
+
+<section class="tab-content oculto" id="tab-productos">
+<div class="card">
+<div class="heading">
+<h3>Productos</h3>
+<button class="btn" id="nuevo-producto">+ Añadir producto</button>
+</div>
+<div class="tools">
+<input id="buscar-producto" type="search" placeholder="Buscar por nombre, código o categoría">
+<select id="filtro-estado-producto">
+<option value="todos">Todos los estados</option>
+<option value="activos">Activos</option>
+<option value="inactivos">Desactivados</option>
+</select>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Foto</th><th>Código</th><th>Nombre</th><th>Descripción</th><th>Categoría</th><th>Precio</th><th>Costo</th><th>Estado</th><th>Acciones</th></tr></thead>
+<tbody id="tabla-productos"></tbody>
+</table>
+</div>
+<p id="vacio-productos" class="empty oculto">No se encontraron productos.</p>
+</div>
+
+<div id="editor-producto" class="card oculto">
+<div class="heading">
+<h3 id="titulo-editor-producto">Nuevo producto</h3>
+<button class="btn btn-sec" id="cancelar-producto">Cancelar</button>
+</div>
+<form id="form-producto">
+<input id="producto-id" type="hidden">
+<div class="form-grid">
+<div class="field"><label for="producto-nombre">Nombre</label><input id="producto-nombre" maxlength="150" required></div>
+<div class="field"><label for="producto-descripcion">Descripción</label><input id="producto-descripcion" maxlength="150" required></div>
+<div class="field"><label for="producto-categoria">Categoría</label><input id="producto-categoria" maxlength="50" required></div>
+<div class="field"><label for="producto-precio">Precio de venta (Gs.)</label><input id="producto-precio" type="number" min="0" step="1" required></div>
+<div class="field"><label for="producto-costo">Costo (Gs.)</label><input id="producto-costo" type="number" min="0" step="1" value="0" required></div>
+<div class="field"><label for="producto-fecha">Fecha</label><input id="producto-fecha" type="date" required></div>
+<div class="field"><label for="producto-proveedor">ID proveedor</label><input id="producto-proveedor" type="number" min="1" value="1" required></div>
+</div>
+
+<div class="field">
+    <label for="producto-imagen">Fotografía del producto</label>
+    <input
+        id="producto-imagen"
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+    >
+    <small class="muted">Formatos JPG, PNG o WEBP. Máximo 5 MB.</small>
+    <div id="contenedor-vista-imagen" class="oculto" style="margin-top:10px">
+        <img
+            id="vista-imagen"
+            alt="Vista previa del producto"
+            style="max-width:180px;max-height:180px;object-fit:contain;border-radius:8px"
+        >
+    </div>
+    <p id="estado-imagen" class="muted"></p>
+</div>
+
+<div class="form-actions">
+    <button class="btn" type="submit">Guardar producto</button>
+</div>
+</form>
+</div>
+</section>
+
+<section class="tab-content oculto" id="tab-estadisticas">
+<div class="card">
+<div class="heading"><h3>Resumen de ventas</h3></div>
+<div class="filters">
+<div class="field"><label for="stats-desde">Desde</label><input id="stats-desde" type="date"></div>
+<div class="field"><label for="stats-hasta">Hasta</label><input id="stats-hasta" type="date"></div>
+<button class="btn" id="aplicar-stats">Aplicar período</button>
+<button class="btn btn-sec" id="limpiar-stats">Todo el período</button>
+</div>
+</div>
+<div class="grid-stats">
+<div class="stat"><p>Pedidos</p><strong id="stat-pedidos">0</strong></div>
+<div class="stat"><p>Clientes compradores</p><strong id="stat-clientes">0</strong></div>
+<div class="stat"><p>Facturación</p><strong id="stat-facturacion">Gs. 0</strong></div>
+</div>
+<div class="card">
+<div class="heading"><h3>Productos más vendidos</h3></div>
+<div class="table-wrap">
+<table><thead><tr><th>Producto</th><th>Unidades</th><th>Facturación</th></tr></thead><tbody id="tabla-mas-vendidos"></tbody></table>
+</div>
+<p id="vacio-mas-vendidos" class="empty oculto">Todavía no hay ventas en este período.</p>
+</div>
+<div class="card">
+<div class="heading"><h3>Ventas por día</h3></div>
+<div class="table-wrap">
+<table><thead><tr><th>Fecha</th><th>Pedidos</th><th>Facturación</th></tr></thead><tbody id="tabla-por-dia"></tbody></table>
+</div>
+</div>
+</section>
+</main>
+
+<footer>© 2026 Tienda Sin Gluten</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+let usuarios=[],pedidos=[],productos=[];
+function dinero(v){return 'Gs. '+Math.round(Number(v)||0).toLocaleString('es-PY')}
+function seguro(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function fecha(v){if(!v)return '—';const d=new Date(String(v).replace(' ','T'));return Number.isNaN(d.getTime())?v:d.toLocaleString('es-PY')}
+function aviso(id,msg,tipo='error'){const e=$(id);e.textContent=msg;e.className='notice '+tipo;if(id==='error-panel')$('ok-panel').className='notice';if(id==='ok-panel')$('error-panel').className='notice'}
+async function api(url,opciones={}){const r=await fetch(url,{...opciones,headers:{...(opciones.body?{'Content-Type':'application/json'}:{}),...(opciones.headers||{})}});let d={};try{d=await r.json()}catch{}if(r.status===401){login();throw new Error(d.error||'La sesión administrativa terminó.')}if(!r.ok)throw new Error(d.error||'La operación no pudo completarse.');return d}
+function panel(){$('acceso').classList.add('oculto');$('panel').classList.remove('oculto');$('btn-salir').classList.remove('oculto')}
+function login(){$('panel').classList.add('oculto');$('acceso').classList.remove('oculto');$('btn-salir').classList.add('oculto')}
+function cambiarTab(nombre){document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('activa',b.dataset.tab===nombre));document.querySelectorAll('.tab-content').forEach(s=>s.classList.toggle('oculto',s.id!=='tab-'+nombre))}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>cambiarTab(b.dataset.tab)));
+
+$('form-login').addEventListener('submit',async e=>{
+e.preventDefault();$('error-login').className='notice';
+try{await api('/api/admin/login',{method:'POST',body:JSON.stringify({usuario:$('usuario').value,contrasena:$('contrasena').value})});$('contrasena').value='';panel();await cargarTodo()}
+catch(err){aviso('error-login',err.message)}
+});
+$('btn-salir').addEventListener('click',async()=>{try{await fetch('/api/admin/logout',{method:'POST'})}finally{usuarios=[];pedidos=[];productos=[];login()}});
+$('btn-actualizar').addEventListener('click',cargarTodo);
+
+async function cargarTodo(){
+$('error-panel').className='notice';
+try{
+const [u,p,pr]=await Promise.all([api('/api/admin/usuarios'),api('/api/admin/pedidos'),api('/api/admin/productos')]);
+usuarios=u.usuarios||[];pedidos=p.pedidos||[];productos=pr.productos||[];
+dibujarUsuarios();dibujarPedidos();dibujarProductos();await cargarStats()
+}catch(e){aviso('error-panel',e.message)}
+}
+
+function dibujarUsuarios(){
+const q=$('buscar-usuario').value.toLowerCase().trim(),estado=$('filtro-estado-usuario').value;
+const lista=usuarios.filter(u=>(estado==='todos'||(estado==='activos'&&Number(u.activo)===1)||(estado==='inactivos'&&Number(u.activo)===0))&&[u.n_cliente,u.nombre,u.apellido,u.telefono,u.ruc,u.direccion].join(' ').toLowerCase().includes(q));
+$('cuenta-usuarios').textContent=`${lista.length} usuario(s)`;
+$('tabla-usuarios').innerHTML=lista.map(u=>`<tr><td>${u.n_cliente}</td><td>${seguro(u.nombre)} ${seguro(u.apellido)}</td><td>${seguro(u.telefono)}</td><td>${seguro(u.direccion||'—')}</td><td>${seguro(u.ruc||'—')}</td><td><span class="pill ${Number(u.activo)?'':'off'}">${Number(u.activo)?'Activo':'Desactivado'}</span></td><td><button class="btn btn-small" onclick="verCompras(${u.n_cliente})">Compras</button><button class="btn btn-sec btn-small" onclick="editarUsuario(${u.n_cliente})">Editar</button><button class="btn btn-sec btn-small" onclick="cambiarEstadoUsuario(${u.n_cliente})">${Number(u.activo)?'Desactivar':'Activar'}</button><button class="btn btn-danger btn-small" onclick="eliminarUsuario(${u.n_cliente})">Eliminar</button></td></tr>`).join('');
+$('vacio-usuarios').classList.toggle('oculto',lista.length>0)
+}
+$('buscar-usuario').addEventListener('input',dibujarUsuarios);
+$('filtro-estado-usuario').addEventListener('change',dibujarUsuarios);
+
+async function verCompras(id){
+try{
+const u=usuarios.find(x=>Number(x.n_cliente)===id);
+const d=await api(`/api/admin/usuarios/${id}/compras`);
+$('titulo-historial').textContent=`Compras de ${u?u.nombre+' '+u.apellido:'cliente #'+id}`;
+const lista=d.compras||[];
+$('contenido-historial').innerHTML=lista.length?`<div class="table-wrap"><table><thead><tr><th>Pedido</th><th>Fecha</th><th>Productos y cantidades</th><th>Dirección</th><th>Pago</th><th>Total</th></tr></thead><tbody>${lista.map(p=>`<tr><td>${p.n_pedido}</td><td>${seguro(fecha(p.fecha))}</td><td>${seguro(p.productos||'—')}</td><td>${seguro(p.direccion_entrega||'—')}</td><td>${seguro(p.metodo_pago||'—')}</td><td>${dinero(p.total)}</td></tr>`).join('')}</tbody></table></div>`:'<p class="empty">Este cliente todavía no tiene compras.</p>';
+$('historial-cliente').classList.remove('oculto');$('historial-cliente').scrollIntoView({behavior:'smooth',block:'start'})
+}catch(e){aviso('error-panel',e.message)}
+}
+$('cerrar-historial').addEventListener('click',()=>$('historial-cliente').classList.add('oculto'));
+
+async function editarUsuario(id){
+const u=usuarios.find(x=>Number(x.n_cliente)===id);if(!u)return;
+const nombre=prompt('Nombre:',u.nombre);if(nombre===null)return;
+const apellido=prompt('Apellido:',u.apellido);if(apellido===null)return;
+const telefono=prompt('Teléfono (10 dígitos empezando por 0):',u.telefono);if(telefono===null)return;
+const direccion=prompt('Dirección:',u.direccion||'');if(direccion===null)return;
+const ruc=prompt('RUC (opcional):',u.ruc||'');if(ruc===null)return;
+try{await api(`/api/admin/usuarios/${id}`,{method:'PUT',body:JSON.stringify({nombre,apellido,telefono,direccion,ruc})});aviso('ok-panel','Datos del cliente actualizados.','ok');await cargarTodo()}
+catch(e){aviso('error-panel',e.message)}
+}
+
+async function cambiarEstadoUsuario(id){
+const u=usuarios.find(x=>Number(x.n_cliente)===id);if(!u)return;
+const activar=!Number(u.activo);if(!confirm(`${activar?'¿Activar':'¿Desactivar'} la cuenta de ${u.nombre} ${u.apellido}?`))return;
+try{await api(`/api/admin/usuarios/${id}/estado`,{method:'PATCH',body:JSON.stringify({activo:activar})});aviso('ok-panel',`Cuenta ${activar?'activada':'desactivada'}.`,'ok');await cargarTodo()}
+catch(e){aviso('error-panel',e.message)}
+}
+
+async function eliminarUsuario(id){
+const u=usuarios.find(x=>Number(x.n_cliente)===id);if(!u)return;
+if(!confirm(`ELIMINACIÓN DEFINITIVA\nSe eliminará la cuenta de ${u.nombre} ${u.apellido} y también TODOS sus pedidos y líneas de compra. Esta acción no se puede deshacer.\n\n¿Continuar?`))return;
+try{await api(`/api/admin/usuarios/${id}`,{method:'DELETE'});$('historial-cliente').classList.add('oculto');aviso('ok-panel','Cuenta y su historial eliminados.','ok');await cargarTodo()}
+catch(e){aviso('error-panel',e.message)}
+}
+
+function dibujarPedidos(){
+const q=$('buscar-pedido').value.toLowerCase().trim(),desde=$('fecha-desde').value,hasta=$('fecha-hasta').value;
+const lista=pedidos.filter(p=>{const dia=String(p.fecha_pedido||'').slice(0,10);return (!desde||dia>=desde)&&(!hasta||dia<=hasta)&&[p.id_pedido,p.id_cliente,p.nombre_cliente,p.apellido_cliente,p.productos,p.categorias,p.direccion,p.metodos_pago].join(' ').toLowerCase().includes(q)});
+$('cuenta-pedidos').textContent=`${lista.length} pedido(s)`;
+$('tabla-pedidos').innerHTML=lista.map(p=>`<tr><td>${p.id_pedido}</td><td>${seguro(fecha(p.fecha_pedido))}</td><td>#${p.id_cliente} ${seguro(p.nombre_cliente||'')} ${seguro(p.apellido_cliente||'')}</td><td>${seguro(p.productos||'—')}</td><td>${seguro(p.categorias||'—')}</td><td>${seguro(p.direccion||'—')}</td><td>${seguro(p.metodos_pago||'—')}</td><td><strong>${dinero(p.total)}</strong></td></tr>`).join('');
+$('vacio-pedidos').classList.toggle('oculto',lista.length>0)
+}
+['buscar-pedido','fecha-desde','fecha-hasta'].forEach(id=>$(id).addEventListener(id==='buscar-pedido'?'input':'change',dibujarPedidos));
+
+function dibujarProductos(){
+const q=$('buscar-producto').value.toLowerCase().trim(),estado=$('filtro-estado-producto').value;
+const lista=productos.filter(p=>(estado==='todos'||(estado==='activos'&&Number(p.activo)===1)||(estado==='inactivos'&&Number(p.activo)===0))&&[p.cod_producto,p.nombre,p.descripcion,p.categoria].join(' ').toLowerCase().includes(q));
+$('tabla-productos').innerHTML=lista.map(p=>`<tr><td>${p.imagen?`<img src="${seguro(p.imagen.startsWith('http')||p.imagen.startsWith('/')?p.imagen:'/static/'+p.imagen)}" alt="${seguro(p.nombre)}" style="width:55px;height:55px;object-fit:contain;border-radius:6px">`:'—'}</td><td>${p.cod_producto}</td><td>${seguro(p.nombre)}</td><td>${seguro(p.descripcion)}</td><td>${seguro(p.categoria)}</td><td>${dinero(p.precio)}</td><td>${dinero(p.costo)}</td><td><span class="pill ${Number(p.activo)?'':'off'}">${Number(p.activo)?'Activo':'Desactivado'}</span></td><td><button class="btn btn-sec btn-small" onclick="editarProducto(${p.cod_producto})">Editar</button><button class="btn btn-sec btn-small" onclick="cambiarEstadoProducto(${p.cod_producto})">${Number(p.activo)?'Desactivar':'Activar'}</button><button class="btn btn-danger btn-small" onclick="eliminarProducto(${p.cod_producto})">Eliminar</button></td></tr>`).join('');
+$('vacio-productos').classList.toggle('oculto',lista.length>0)
+}
+$('buscar-producto').addEventListener('input',dibujarProductos);
+$('filtro-estado-producto').addEventListener('change',dibujarProductos);
+
+function abrirEditor(p=null){
+$('form-producto').reset();$('producto-id').value=p?p.cod_producto:'';
+$('titulo-editor-producto').textContent=p?'Editar producto':'Añadir producto';
+$('producto-nombre').value=p?.nombre||'';
+$('producto-descripcion').value=p?.descripcion||'';
+$('producto-categoria').value=p?.categoria||'';
+$('producto-precio').value=p?.precio??'';
+$('producto-costo').value=p?.costo??0;
+$('producto-fecha').value=p?.fecha||new Date().toISOString().slice(0,10);
+$('producto-proveedor').value=p?.id_proveedor||1;
+$('producto-imagen').value='';
+$('estado-imagen').textContent=p?.imagen
+    ?'Selecciona otra imagen si deseas reemplazar la actual.'
+    :'No hay una imagen seleccionada.';
+$('contenedor-vista-imagen').classList.toggle('oculto',!p?.imagen);
+$('vista-imagen').src=p?.imagen
+    ?(p.imagen.startsWith('http')||p.imagen.startsWith('/')
+        ?p.imagen
+        :'/static/'+p.imagen)
+    :'';
+$('editor-producto').classList.remove('oculto');
+$('editor-producto').scrollIntoView({behavior:'smooth'})
+}
+$('nuevo-producto').addEventListener('click',()=>abrirEditor());
+$('cancelar-producto').addEventListener('click',()=>$('editor-producto').classList.add('oculto'));
+$('producto-imagen').addEventListener('change',()=>{
+    const archivo=$('producto-imagen').files[0];
+
+    if(!archivo){
+        return;
+    }
+
+    if(!['image/jpeg','image/png','image/webp'].includes(archivo.type)){
+        $('producto-imagen').value='';
+        aviso('error-panel','Formato no válido. Usa JPG, PNG o WEBP.');
+        return;
+    }
+
+    if(archivo.size>5*1024*1024){
+        $('producto-imagen').value='';
+        aviso('error-panel','La imagen no puede superar los 5 MB.');
+        return;
+    }
+
+    $('vista-imagen').src=URL.createObjectURL(archivo);
+    $('contenedor-vista-imagen').classList.remove('oculto');
+    $('estado-imagen').textContent='Nueva imagen seleccionada.';
+});
+
+function editarProducto(id){const p=productos.find(x=>Number(x.cod_producto)===id);if(p)abrirEditor(p)}
+
+$('form-producto').addEventListener('submit',async e=>{
+    e.preventDefault();
+
+    const id=$('producto-id').value;
+
+    const d={
+        nombre:$('producto-nombre').value.trim(),
+        descripcion:$('producto-descripcion').value.trim(),
+        categoria:$('producto-categoria').value.trim(),
+        precio:$('producto-precio').value,
+        costo:$('producto-costo').value,
+        fecha:$('producto-fecha').value,
+        id_proveedor:$('producto-proveedor').value
+    };
+
+    const archivo=$('producto-imagen').files[0];
+
+    try{
+        // Crear o actualizar los datos del producto.
+        const resultado=await api(
+            id?`/api/admin/productos/${id}`:'/api/admin/productos',
+            {
+                method:id?'PUT':'POST',
+                body:JSON.stringify(d)
+            }
+        );
+
+        // Para productos nuevos, obtener el código recién creado.
+        const codigo=id||resultado.cod_producto;
+
+        // Subir la imagen solo si se seleccionó una.
+        if(archivo){
+            const formularioImagen=new FormData();
+            formularioImagen.append('imagen',archivo);
+
+            const respuesta=await fetch(
+                `/api/admin/productos/${codigo}/imagen`,
+                {
+                    method:'POST',
+                    body:formularioImagen
+                }
+            );
+
+            let datosImagen={};
+            try{
+                datosImagen=await respuesta.json();
+            }catch{}
+
+            if(!respuesta.ok){
+                throw new Error(
+                    datosImagen.error||
+                    'El producto se guardó, pero no se pudo subir la imagen.'
+                );
+            }
+        }
+
+        $('editor-producto').classList.add('oculto');
+
+        aviso(
+            'ok-panel',
+            id?'Producto actualizado.':'Producto creado.',
+            'ok'
+        );
+
+        await cargarTodo();
+
+    }catch(err){
+        aviso('error-panel',err.message);
+    }
+});
+
+
+async function cambiarEstadoProducto(id){
+const p=productos.find(x=>Number(x.cod_producto)===id);if(!p)return;
+const activar=!Number(p.activo);if(!confirm(`${activar?'¿Activar':'¿Desactivar'} ${p.nombre}?`))return;
+try{await api(`/api/admin/productos/${id}/estado`,{method:'PATCH',body:JSON.stringify({activo:activar})});aviso('ok-panel',`Producto ${activar?'activado':'desactivado'}.`,'ok');await cargarTodo()}
+catch(e){aviso('error-panel',e.message)}
+}
+
+async function eliminarProducto(id){
+const p=productos.find(x=>Number(x.cod_producto)===id);if(!p||!confirm(`¿Eliminar definitivamente el producto ${p.nombre}? Si tiene ventas, deberás desactivarlo para conservar el historial.`))return;
+try{await api(`/api/admin/productos/${id}`,{method:'DELETE'});aviso('ok-panel','Producto eliminado.','ok');await cargarTodo()}
+catch(e){aviso('error-panel',e.message)}
+}
+
+async function cargarStats(){
+const qs=new URLSearchParams();
+if($('stats-desde').value)qs.set('desde',$('stats-desde').value);
+if($('stats-hasta').value)qs.set('hasta',$('stats-hasta').value);
+const d=await api('/api/admin/estadisticas'+(qs.toString()?'?'+qs:''));
+$('stat-pedidos').textContent=d.resumen.pedidos||0;
+$('stat-clientes').textContent=d.resumen.clientes||0;
+$('stat-facturacion').textContent=dinero(d.resumen.facturacion);
+$('tabla-mas-vendidos').innerHTML=(d.mas_vendidos||[]).map(p=>`<tr><td>${seguro(p.nombre)}</td><td>${p.unidades}</td><td>${dinero(p.facturacion)}</td></tr>`).join('');
+$('vacio-mas-vendidos').classList.toggle('oculto',(d.mas_vendidos||[]).length>0);
+$('tabla-por-dia').innerHTML=(d.por_dia||[]).map(p=>`<tr><td>${seguro(p.dia)}</td><td>${p.pedidos}</td><td>${dinero(p.facturacion)}</td></tr>`).join('')
+}
+$('aplicar-stats').addEventListener('click',()=>cargarStats().catch(e=>aviso('error-panel',e.message)));
+$('limpiar-stats').addEventListener('click',()=>{$('stats-desde').value='';$('stats-hasta').value='';cargarStats().catch(e=>aviso('error-panel',e.message))});
+
+
+function aplicarTema(oscuro) {
+    document.body.classList.toggle('oscuro', oscuro);
+
+    const boton = $('btn-tema');
+    const icono = $('icono-tema');
+
+    if (oscuro) {
+        icono.innerHTML = `
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42
+                     m11.3 11.3 1.42 1.42M2 12h2m16 0h2
+                     M4.93 19.07l1.42-1.42
+                     m11.3-11.3 1.42-1.42"/>
+        `;
+        boton.title = 'Cambiar a modo claro';
+        boton.setAttribute('aria-label', 'Cambiar a modo claro');
+    } else {
+        icono.innerHTML = `
+            <path d="M20.9 13A9 9 0 0 1 11 3.1
+                     9 9 0 1 0 20.9 13Z"/>
+        `;
+        boton.title = 'Cambiar a modo oscuro';
+        boton.setAttribute('aria-label', 'Cambiar a modo oscuro');
+    }
+}
+
+$('btn-tema').addEventListener('click', () => {
+    const oscuro = !document.body.classList.contains('oscuro');
+    aplicarTema(oscuro);
+    localStorage.setItem('tema-oscuro', oscuro ? 'true' : 'false');
+});
+
+aplicarTema(localStorage.getItem('tema-oscuro') === 'true');
+
+window.addEventListener('storage', e => {
+    if (e.key === 'tema-oscuro') {
+        aplicarTema(e.newValue === 'true');
+    }
+});
+
+(async()=>{
+try{
+const r=await fetch('/api/admin/pedidos');
+if(r.ok){panel();await cargarTodo()}else login()
+}catch{login()}
+})();
+</script>
+</body>
+</html>
