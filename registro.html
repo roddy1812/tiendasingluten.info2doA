@@ -105,6 +105,30 @@
             font-size: 15px;
         }
 
+
+        .contrasena-contenedor {
+            position: relative;
+        }
+
+        .contrasena-contenedor input {
+            padding-right: 40px;
+        }
+
+        .boton-ojo {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #315c43;
+            padding: 3px;
+            touch-action: none;
+        }
+
+
         .campo input.invalido {
             border-color: #c0392b;
             background-color: #fbe9e7;
@@ -166,14 +190,209 @@
                 grid-template-columns: 1fr;
             }
         }
+
+
+        /* ===== ANIMACIONES DE REGISTRO ===== */
+
+        button,
+        .boton,
+        input[type="submit"] {
+            transition:
+                background-color 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        button:hover,
+        .boton:hover,
+        input[type="submit"]:hover {
+            transform: scale(1.025);
+            filter: brightness(1.08);
+        }
+
+        button:active,
+        .boton:active,
+        input[type="submit"]:active {
+            transform: scale(0.98);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            button,
+            .boton,
+            input[type="submit"] {
+                transition: none;
+            }
+        }
+
+        /* ===== TEMA OSCURO ===== */
+
+        body.tema-oscuro {
+            background-color: #151915;
+            color: #e8eee8;
+        }
+
+        .tema-oscuro header {
+            background-color: #1d3829;
+            color: #ffffff;
+        }
+
+        .tema-oscuro .card {
+            background-color: #222922;
+            color: #e8eee8;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, .25);
+        }
+
+        .tema-oscuro h2,
+        .tema-oscuro .formulario h2,
+        .tema-oscuro .total {
+            color: #a9d5b2;
+        }
+
+        .tema-oscuro .pestanas {
+            border-bottom-color: #3b493d;
+        }
+
+        .tema-oscuro .pestana {
+            color: #b9c4ba;
+        }
+
+        .tema-oscuro .pestana.activa {
+            color: #a9d5b2;
+            border-bottom-color: #a9d5b2;
+        }
+
+        .tema-oscuro input:not([type="checkbox"]):not([type="radio"]) {
+            background-color: #171d18;
+            color: #f1f5f1;
+            border-color: #4b594d;
+        }
+
+        .tema-oscuro input::placeholder {
+            color: #a0aaa1;
+        }
+
+        .tema-oscuro .boton-ojo {
+            color: #a9d5b2;
+        }
+
+        .tema-oscuro .item {
+            border-bottom-color: #3a443b;
+        }
+
+        .tema-oscuro .metodo {
+            border-color: #48574a;
+            background-color: #252e26;
+            color: #e8eee8;
+        }
+
+        .tema-oscuro .metodo.activo {
+            border-color: #8cbd97;
+            background-color: #304936;
+        }
+
+        .tema-oscuro .panel {
+            background-color: #1a211b;
+            color: #e8eee8;
+        }
+
+        .tema-oscuro .mensaje.exito {
+            background-color: #263e2b;
+            color: #bce5c3;
+        }
+
+        .tema-oscuro .mensaje.error,
+        .tema-oscuro .campo input.invalido {
+            background-color: #3b2422;
+            color: #ffb9b2;
+        }
+
+        .tema-oscuro .campo input.invalido {
+            border-color: #e16b61;
+        }
+
+        .tema-oscuro a {
+            color: #a9d5b2;
+        }
+
+        .tema-oscuro .error,
+        .tema-oscuro .error-campo {
+            color: #ffaaa3;
+        }
+
+        .tema-oscuro .boton {
+            background-color: #477b55;
+            color: #ffffff;
+        }
+
+        .tema-oscuro .boton:disabled {
+            background-color: #555d56;
+        }
+
+        .tema-oscuro .boton-ojo:hover,
+        .tema-oscuro .pestana:hover {
+            filter: brightness(1.2);
+        }
+
+        .boton-tema {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 9px;
+            color: #ffffff;
+            background: transparent;
+            border: 1px solid #ffffff;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .boton-tema svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .acciones-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .acciones-header {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        /* Tema oscuro */
+        body.tema-oscuro {
+            background-color: #151915;
+            color: #e8eee8;
+        }
+
+        body.tema-oscuro header {
+            background-color: #1d3829;
+            color: white;
+        }
+
+        body.tema-oscuro .card {
+            background-color: #222922;
+            color: #e8eee8;
+        }
+
+        body.tema-oscuro input {
+            background-color: #171d18;
+            color: white;
+            border-color: #4b594d;
+        }
     </style>
 </head>
 
 <body>
-
     <header>
         <h1>Tienda Sin Gluten</h1>
-        <a href="inicio.html">← Volver a la tienda</a>
     </header>
 
     <main>
@@ -195,14 +414,11 @@
                 </div>
 
                 <div class="campo">
-                    <label for="reg-ruc">RUC (opcional)</label>
-                    <input type="text" id="reg-ruc" placeholder="80012345-6" maxlength="15">
-                    <small class="error-campo" id="err-reg-ruc"></small>
-                </div>
-
-                <div class="campo">
                     <label for="login-contrasena">Contraseña</label>
-                    <input type="password" id="login-contrasena" autocomplete="current-password">
+                    <div class="contrasena-contenedor">
+                        <input type="password" id="login-contrasena" autocomplete="current-password">
+                        <button type="button" class="boton-ojo" aria-label="Mantener presionado para ver la contraseña">👁</button>
+                    </div>
                     <small class="error-campo" id="err-login-contrasena"></small>
                 </div>
 
@@ -239,15 +455,27 @@
                     <small class="error-campo" id="err-reg-telefono"></small>
                 </div>
 
+                <div class="campo">
+                    <label for="reg-ruc">RUC (opcional)</label>
+                    <input type="text" id="reg-ruc" placeholder="80012345-6" maxlength="15">
+                    <small class="error-campo" id="err-reg-ruc"></small>
+                </div>
+
                 <div class="fila">
                     <div class="campo">
                         <label for="reg-contrasena">Contraseña</label>
-                        <input type="password" id="reg-contrasena" autocomplete="new-password">
+                        <div class="contrasena-contenedor">
+                            <input type="password" id="reg-contrasena" autocomplete="new-password">
+                            <button type="button" class="boton-ojo" aria-label="Mantener presionado para ver la contraseña">👁</button>
+                        </div>
                         <small class="error-campo" id="err-reg-contrasena"></small>
                     </div>
                     <div class="campo">
                         <label for="reg-confirmar">Confirmar contraseña</label>
-                        <input type="password" id="reg-confirmar" autocomplete="new-password">
+                        <div class="contrasena-contenedor">
+                            <input type="password" id="reg-confirmar" autocomplete="new-password">
+                            <button type="button" class="boton-ojo" aria-label="Mantener presionado para ver la contraseña">👁</button>
+                        </div>
                         <small class="error-campo" id="err-reg-confirmar"></small>
                     </div>
                 </div>
@@ -260,6 +488,12 @@
     </main>
 
     <script>
+
+        // Aplicar el tema elegido en inicio.html
+        const temaGuardado = localStorage.getItem('tema-oscuro') === 'true';
+
+        document.body.classList.toggle('tema-oscuro', temaGuardado);
+
         const pestanas = document.querySelectorAll('.pestana');
         const formularios = document.querySelectorAll('.formulario');
 
@@ -308,9 +542,24 @@
         }
 
         // Ir a la página de pago después de iniciar sesión o registrarse
-        function irAPago() {
-            setTimeout(() => window.location.href = 'pago.html', 1000);
+        
+        function finalizarAutenticacion() {
+            if (window.parent !== window) {
+                const modal = window.parent.document.getElementById('modal-autenticacion');
+                const origen = modal.dataset.origen;
+
+                window.parent.cerrarAutenticacion();
+
+                if (origen === 'pago') {
+                    window.parent.location.href = '/pago';
+                } else {
+                    window.parent.location.href = '/';
+                }
+            } else {
+                window.location.href = '/';
+            }
         }
+
 
         // Revisa las reglas y muestra el primer error de cada campo debajo de él.
         // Devuelve true si todo está bien.
@@ -333,7 +582,7 @@
         }
 
         // Registro
-        document.getElementById('form-registro').addEventListener('submit', e => {
+        document.getElementById('form-registro').addEventListener('submit', async e => {
             e.preventDefault();
             limpiarErrores('form-registro');
 
@@ -384,31 +633,42 @@
 
             if (!validar(reglas)) return;
 
-            const usuarios = obtenerUsuarios();
-            if (usuarios.some(u => u.telefono === v.telefono)) {
-                regTelefono.classList.add('invalido');
-                document.getElementById('err-reg-telefono').textContent = 'Ya existe una cuenta con este número.';
+            let datos, respuesta;
+
+            try {
+                respuesta = await fetch('/api/registro', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(v)
+                });
+                datos = await respuesta.json();
+            } catch (error) {
+                return mostrarMensaje('mensaje-registro', 'No se pudo conectar con el servidor.', 'error');
+            }
+
+            if (!respuesta.ok) {
+                const campo = document.getElementById(datos.campo);
+                const caja = document.getElementById('err-' + datos.campo);
+
+                if (campo && caja) {
+                    campo.classList.add('invalido');
+                    caja.textContent = datos.error;
+                } else {
+                    mostrarMensaje('mensaje-registro', datos.error, 'error');
+                }
                 return;
             }
 
-            usuarios.push({
-                nombre: v.nombre,
-                apellido: v.apellido,
-                direccion: v.direccion,
-                telefono: v.telefono,
-                ruc: v.ruc,
-                contrasena: v.contrasena
-            });
-            localStorage.setItem('usuarios', JSON.stringify(usuarios));
-            localStorage.setItem('sesion', JSON.stringify({ telefono: v.telefono, nombre: v.nombre }));
+            mostrarMensaje('mensaje-registro', '¡Cuenta creada! Bienvenido, ' + datos.nombre + '.', 'exito');
+            setTimeout(() => {
+                finalizarAutenticacion();
+            }, 1000);
 
-            mostrarMensaje('mensaje-registro', '¡Cuenta creada! Bienvenido, ' + v.nombre + '. Te llevamos a pagar...', 'exito');
-            irAPago();
             e.target.reset();
         });
 
         // Iniciar sesión
-        document.getElementById('form-login').addEventListener('submit', e => {
+        document.getElementById('form-login').addEventListener('submit', async e => {
             e.preventDefault();
             limpiarErrores('form-login');
 
@@ -429,20 +689,85 @@
 
             if (!validar(reglas)) return;
 
-            const usuario = obtenerUsuarios().find(u => u.telefono === v.telefono && u.contrasena === v.contrasena);
+            let datos, respuesta;
 
-            if (!usuario) {
-                loginTelefono.classList.add('invalido');
-                loginContrasena.classList.add('invalido');
-                return mostrarMensaje('mensaje-login', 'Teléfono o contraseña incorrectos.', 'error');
+            try {
+                respuesta = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(v)
+                });
+                datos = await respuesta.json();
+            } catch (error) {
+                return mostrarMensaje('mensaje-login', 'No se pudo conectar con el servidor.', 'error');
             }
 
-            localStorage.setItem('sesion', JSON.stringify({ telefono: v.telefono, nombre: usuario.nombre }));
-            mostrarMensaje('mensaje-login', 'Bienvenido, ' + usuario.nombre + '. Te llevamos a pagar...', 'exito');
-            irAPago();
+            if (!respuesta.ok) {
+                loginTelefono.classList.add('invalido');
+                loginContrasena.classList.add('invalido');
+                return mostrarMensaje('mensaje-login', datos.error, 'error');
+            }
+
+            mostrarMensaje('mensaje-login', 'Bienvenido, ' + datos.nombre + '.', 'exito');
+
+            setTimeout(() => {
+                finalizarAutenticacion();
+            }, 1000);
             e.target.reset();
         });
-    </script>
 
+        document.querySelectorAll('.boton-ojo').forEach(boton => {
+            const campo = boton.parentElement.querySelector('input');
+
+            boton.addEventListener('pointerdown', e => {
+                e.preventDefault();
+                campo.type = 'text';
+            });
+
+            function ocultarContrasena() {
+                campo.type = 'password';
+            }
+
+            boton.addEventListener('pointerup', ocultarContrasena);
+            boton.addEventListener('pointerleave', ocultarContrasena);
+            boton.addEventListener('pointercancel', ocultarContrasena);
+
+            window.addEventListener('pointerup', ocultarContrasena);
+        });
+
+        function aplicarTema(oscuro) {
+            document.body.classList.toggle('tema-oscuro', oscuro);
+
+            const boton = document.getElementById('btn-tema');
+            const icono = document.getElementById('icono-tema');
+
+            if (boton && icono) {
+                boton.setAttribute(
+                    'aria-label',
+                    oscuro ? 'Activar modo claro' : 'Activar modo oscuro'
+                );
+
+                icono.innerHTML = oscuro
+                    ? '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path>'
+                    : '<path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13z"></path>';
+            }
+        }
+
+        const temaInicial = localStorage.getItem('tema-oscuro') === 'true';
+        aplicarTema(localStorage.getItem('tema-oscuro') === 'true');
+
+        window.addEventListener('storage', function (evento) {
+            if (evento.key === 'tema-oscuro') {
+                aplicarTema(evento.newValue === 'true');
+            }
+        });
+
+        document.getElementById('btn-tema').addEventListener('click', () => {
+            const oscuro = !document.body.classList.contains('tema-oscuro');
+
+            localStorage.setItem('tema-oscuro', oscuro);
+            aplicarTema(oscuro);
+        });
+    </script>
 </body>
 </html>
