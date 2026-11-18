@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -42,9 +43,68 @@
         /* PORTADA */
 
         .portada {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+
             text-align: center;
-            padding: 90px 20px;
-            background-color: #e6eddf;
+            padding: 120px 20px;
+            min-height: 420px;
+
+            background-color: #000000;
+            color: #ffffff;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .portada::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+
+            background-image: url("/static/imagenes/fondo-sin-gluten.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            opacity: 0.2;
+            z-index: -1;
+        }
+
+        .portada h2,
+        .portada p {
+            color: #ffffff;
+            font-weight: bold;
+            text-shadow:
+                2px 2px 4px #000000,
+                0 0 10px #000000;
+        }
+
+        .portada h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        .portada p {
+            font-size: 19px;
+            line-height: 1.6;
+            max-width: 650px;
+        }
+
+        .portada .boton {
+            position: relative;
+            z-index: 1;
+            margin-top: 15px;
+        }
+
+
+        .portada h2,
+        .portada p {
+            color: white;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
         }
 
         .portada h2 {
@@ -185,9 +245,6 @@
         .carrito-item button {
             width: 60px;
             justify-self: end;
-        }
-
-        .carrito-item button {
             background-color: #c0392b;
             color: white;
             border: none;
@@ -332,6 +389,177 @@
             margin-top: 20px;
         }
 
+        /* BOTÓN DE MODO OSCURO */
+
+        .btn-tema {
+            color: white;
+            background: none;
+            border: 1px solid white;
+            border-radius: 5px;
+            padding: 6px 12px;
+            margin-left: 12px;
+            cursor: pointer;
+        }
+
+        /* MENSAJE DE ERROR DEL CARRITO */
+
+        .error-carrito {
+            display: none;
+            color: #c0392b;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            text-align: right;
+        }
+
+        /* MODO OSCURO */
+
+        .btn-tema {
+            color: white;
+            background: none;
+            border: 1px solid #d0ddd2;
+            border-radius: 5px;
+            padding: 6px 12px;
+            margin-left: 12px;
+            cursor: pointer;
+        }
+
+        /* Advertencia discreta */
+        .error-carrito {
+            display: none;
+            color: #75413d;
+            background-color: #f4eeec;
+            border-left: 3px solid #b78a83;
+            border-radius: 4px;
+            padding: 9px 12px;
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 1.4;
+            margin-top: 12px;
+            text-align: left;
+        }
+
+        /* Fondo general */
+        body.modo-oscuro {
+            background-color: #171e19;
+            color: #e1e8e1;
+        }
+
+        /* Encabezado y pie */
+        body.modo-oscuro header,
+        body.modo-oscuro footer {
+            background-color: #263b2d;
+            color: #e1e8e1;
+        }
+
+        /* Secciones principales */
+        body.modo-oscuro .portada,
+        body.modo-oscuro .contacto,
+        body.modo-oscuro .carrito {
+            background-color: #202a23;
+            color: #e1e8e1;
+        }
+
+        /* Títulos */
+        body.modo-oscuro .portada h2,
+        body.modo-oscuro .productos h2,
+        body.modo-oscuro .contacto h2,
+        body.modo-oscuro .carrito h2,
+        body.modo-oscuro .titulo-categoria,
+        body.modo-oscuro .modal-vista h3 {
+            color: #b4cfb8;
+        }
+
+        /* Tarjetas, carrito y ventana de cuenta */
+        body.modo-oscuro .producto,
+        body.modo-oscuro .carrito-lista,
+        body.modo-oscuro .modal {
+            background-color: #29362d;
+            color: #e1e8e1;
+            border: 1px solid #39483d;
+        }
+
+        /* Precios y total */
+        body.modo-oscuro .precio,
+        body.modo-oscuro .carrito-total {
+            color: #b4cfb8;
+        }
+
+        /* Líneas divisorias */
+        body.modo-oscuro .carrito-item {
+            border-bottom-color: #46554a;
+        }
+
+        body.modo-oscuro .productos hr {
+            border-top-color: #46554a;
+        }
+
+        /* Textos secundarios */
+        body.modo-oscuro .carrito-vacio,
+        body.modo-oscuro .etiqueta,
+        body.modo-oscuro .modal-cerrar {
+            color: #b8c4ba;
+        }
+
+        /* Campos de entrada */
+        body.modo-oscuro input,
+        body.modo-oscuro textarea,
+        body.modo-oscuro select {
+            background-color: #1d2821;
+            color: #e1e8e1;
+            border: 1px solid #526256;
+        }
+
+        body.modo-oscuro input::placeholder,
+        body.modo-oscuro textarea::placeholder {
+            color: #aab6ac;
+        }
+
+        /* Botones principales */
+        body.modo-oscuro .boton {
+            background-color: #477653;
+            color: #ffffff;
+        }
+
+        body.modo-oscuro .boton-secundario {
+            background-color: #56645a;
+            color: #ffffff;
+        }
+
+        /* Acciones destructivas */
+        body.modo-oscuro .boton-rojo,
+        body.modo-oscuro .carrito-item button {
+            background-color: #9e4944;
+            color: #ffffff;
+        }
+
+        /* Avatar de cuenta */
+        body.modo-oscuro .avatar {
+            background-color: #477653;
+            color: white;
+        }
+
+        /* Fondo detrás de la ventana */
+        body.modo-oscuro .modal-fondo {
+            background-color: rgba(0, 0, 0, 0.72);
+        }
+
+        /* Advertencia en modo oscuro */
+        body.modo-oscuro .error-carrito {
+            color: #d9b5b0;
+            background-color: #292b27;
+            border-left-color: #92706a;
+        }
+
+        @media (max-width: 600px) {
+            .btn-tema {
+                margin-left: 7px;
+            }
+        }
+
+
+        /* ADAPTACIÓN A MÓVILES */
+
         @media (max-width: 600px) {
             header {
                 flex-direction: column;
@@ -345,7 +573,309 @@
             .portada h2 {
                 font-size: 30px;
             }
+
+            .btn-tema {
+                margin-left: 7px;
+            }
+
+            .carrito-item {
+                grid-template-columns: 1fr 100px 60px;
+            }
         }
+
+            /* Ventana de registro e inicio de sesión */
+    .modal-autenticacion {
+        position: relative;
+        width: 95%;
+        max-width: 520px;
+        height: 85vh;
+        max-height: 760px;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .modal-autenticacion iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: block;
+        background-color: #f8f8f2;
+    }
+
+    .modal-autenticacion .modal-cerrar {
+        z-index: 2;
+        position: absolute;
+        top: 8px;
+        right: 10px;
+        font-size: 28px;
+    }
+
+    body.modo-oscuro .modal-autenticacion iframe {
+        background-color: #171e19;
+    }
+
+    @media (max-width: 600px) {
+        .modal-autenticacion {
+            width: 96%;
+            height: 90vh;
+        }
+    }
+
+
+    /* ===== ANIMACIONES GENERALES ===== */
+
+    button,
+    .boton,
+    input[type="submit"] {
+        transition:
+            background-color 0.2s ease,
+            color 0.2s ease,
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    button:hover,
+    .boton:hover,
+    input[type="submit"]:hover {
+        transform: scale(1.025);
+        filter: brightness(1.08);
+    }
+
+    button:active,
+    .boton:active,
+    input[type="submit"]:active {
+        transform: scale(0.98);
+    }
+
+    /* ===== TARJETAS DE PRODUCTOS ===== */
+
+    /* Sustituye .producto por la clase real de tus tarjetas
+    si tienen otro nombre. */
+
+    .producto {
+        transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease;
+    }
+
+    .producto:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .producto img {
+        transition: transform 0.25s ease;
+    }
+
+    .producto:hover img {
+        transform: scale(1.02);
+    }
+
+    /* ===== ACCESIBILIDAD ===== */
+
+    @media (prefers-reduced-motion: reduce) {
+        button,
+        .boton,
+        input[type="submit"],
+        .producto,
+        .producto img {
+            transition: none;
+        }
+
+        button:hover,
+        .boton:hover,
+        input[type="submit"]:hover,
+        .producto:hover,
+        .producto:hover img {
+            transform: none;
+        }
+    }
+
+
+    /* ===== VENTANA DE REGISTRO ===== */
+
+    #modal-autenticacion {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+            opacity 0.25s ease,
+            visibility 0.25s ease;
+    }
+
+    #modal-autenticacion.visible {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    #modal-autenticacion .modal {
+        opacity: 0;
+        transform: scale(0.92);
+        transition:
+            transform 0.25s ease,
+            opacity 0.25s ease;
+    }
+
+    #modal-autenticacion.visible .modal {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        #modal-autenticacion,
+        #modal-autenticacion .modal {
+            transition: none;
+        }
+    }
+
+
+    /* ===== NOTIFICACIÓN DEL CARRITO ===== */
+
+    #notificacion-carrito {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        z-index: 99999;
+
+        width: max-content;
+        max-width: calc(100vw - 32px);
+        box-sizing: border-box;
+
+        display: flex;
+        align-items: center;
+        gap: 9px;
+
+        padding: 12px 18px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 14px;
+
+        background: rgba(35, 35, 35, 0.82);
+        color: #fff;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translate(-50%, 20px);
+
+        transition:
+            opacity 0.25s ease,
+            transform 0.25s ease,
+            visibility 0.25s ease;
+    }
+
+    #notificacion-carrito.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translate(-50%, 0);
+    }
+
+    #notificacion-carrito .icono-notificacion {
+        color: #86efac;
+        font-size: 18px;
+        flex-shrink: 0;
+    }
+
+    #notificacion-carrito .texto-notificacion {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        #notificacion-carrito {
+            transition: none;
+        }
+    }
+
+    /* NAVEGACIÓN CON ICONOS */
+
+    .nav-iconos {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .nav-iconos .icono-nav {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-decoration: none;
+        margin: 0;
+        padding: 8px;
+    }
+
+    .nav-iconos svg {
+        width: 23px;
+        height: 23px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .nav-iconos .icono-circular {
+        width: 42px;
+        height: 42px;
+        padding: 9px;
+        border: 1px solid #ffffff;
+        border-radius: 50%;
+        background: transparent;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-sizing: border-box;
+    }
+
+    .nav-iconos .icono-circular:hover,
+    .nav-iconos .icono-nav:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .nav-iconos .contador-icono {
+        position: absolute;
+        top: -3px;
+        right: -4px;
+        min-width: 17px;
+        height: 17px;
+        padding: 0 3px;
+        border-radius: 50%;
+        background-color: #ffffff;
+        color: #315c43;
+        font-size: 11px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    @media (max-width: 600px) {
+        .nav-iconos {
+            justify-content: center;
+            gap: 12px;
+        }
+    }
+
+    body.modo-oscuro .portada {
+    background-color: #000000;
+    }
+
+    body.modo-oscuro .portada::before {
+        opacity: 0.2;
+    }
+
     </style>
 </head>
 
@@ -354,13 +884,39 @@
     <header>
         <h1>Tienda Sin Gluten</h1>
 
-        <nav>
-            <a href="#inicio">Inicio</a>
-            <a href="#productos">Productos</a>
-            <a href="#carrito">Carrito (<span id="contador-carrito">0</span>)</a>
-            <a href="#contacto">Contacto</a>
-            <button class="btn-cuenta" onclick="abrirCuenta()">👤 Mi cuenta</button>
+        <nav class="nav-iconos">
+            <a href="#inicio" class="icono-nav" aria-label="Inicio" title="Inicio">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M3 10.5 12 3l9 7.5M5.5 9v11h13V9M9 20v-7h6v7"/>
+                </svg>
+            </a>
+
+            <a href="#carrito" class="icono-nav icono-carrito"
+            aria-label="Carrito" title="Carrito">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M3 3h2l2.5 12h11L21 7H6M9 20h.01M17 20h.01"/>
+                </svg>
+                <span id="contador-carrito" class="contador-icono">0</span>
+            </a>
+
+            <button class="btn-tema icono-circular" id="btn-tema"
+                    type="button" onclick="cambiarTema()"
+                    aria-label="Cambiar tema" title="Cambiar tema">
+                <svg id="icono-tema" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4"/>
+                    <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>
+                </svg>
+            </button>
+
+            <button class="btn-cuenta icono-circular" type="button"
+                    onclick="abrirCuenta()" aria-label="Mi cuenta" title="Mi cuenta">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="8" r="4"/>
+                    <path d="M4 21a8 8 0 0 1 16 0"/>
+                </svg>
+            </button>
         </nav>
+
     </header>
 
     <section class="portada" id="inicio">
@@ -376,172 +932,69 @@
         </a>
     </section>
 
+    <!-- PRODUCTOS -->
+
     <section class="productos" id="productos">
 
-    <h2>Nuestros productos</h2>
+        <h2>Nuestros productos</h2>
 
-    <h2 class="titulo-categoria">Productos Dulces</h2>
+        {% for categoria, items in categorias.items() %}
 
-    <div class="contenedor">
+            <h2 class="titulo-categoria">{{ categoria }}</h2>
 
-        <div class="producto">
-            <img src="https://snapcalorie-webflow-website.s3.us-east-2.amazonaws.com/media/food_pics_v2/medium/alfajor_dulce_de_leche.jpg" alt="Alfajor">
-            <h3>ALfajor</h3>
-            <p class="precio">Gs. 5.000 c/ uno</p>
-            <button class="boton" onclick="agregar('Alfajor', 5000)">Agregar al carrito</button>
-        </div>
+            <div class="contenedor">
 
-        <div class="producto">
-            <img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=500" alt="Galletitas">
-            <h3>Galletitas</h3>
-            <p class="precio">Gs. 5.000</p>
-            <button class="boton" onclick="agregar('Galletitas', 5000)">Agregar al carrito</button>
-        </div>
+                {% for p in items %}
 
-        <div class="producto">
-            <img src="https://images.rawpixel.com/image_social_landscape/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDI0LTAyL3Jhd3BpeGVsX29mZmljZV80M19waG90b19vZl90d29fZnVkZ3lfYnJvd25pZXNfX2lzb2xhdGVkX29uX3doaV9iNGQyNmJjMC1hZmU3LTQ1ZGMtOTRjZi01MzEyZDQzMGEyN2MuanBn.jpg" alt="Brownie">
-            <h3>Brownie</h3>
-            <p class="precio">Gs. 4.000</p>
-            <button class="boton" onclick="agregar('Brownie', 4000)">Agregar al carrito</button>
-        </div>
+                    <div class="producto">
 
-        <div class="producto">
-            <img src="https://laopinionaustral.com.ar/media/uploads/2025/09/pasta-frola-receta-728x728.webp" alt="Pastafrola">
-            <h3>Pastafrola</h3>
-            <p class="precio">Gs. 4.000</p>
-            <button class="boton" onclick="agregar('Pastafrola', 4000)">Agregar al carrito</button>
-        </div>
+                        {% if url_imagen(p.cod_producto) %}
+                            <img
+                                src="{{ url_imagen(p.cod_producto) }}"
+                                alt="{{ p.nombre }}">
+                        {% endif %}
 
-        <div class="producto">
-            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500" alt="Torta">
-            <h3>Torta de Marmolada</h3>
-            <p class="precio">Gs. 50.000</p>
-            <button class="boton" onclick="agregar('Torta de Marmolada', 50000)">Agregar al carrito</button>
-        </div>
+                        <h3>{{ p.nombre }}</h3>
 
-    </div>
+                        <p class="precio">
+                            {{ p.precio | gs }}
+                        </p>
 
-    <hr>
+                        <button
+                            class="boton"
+                            data-cod="{{ p.cod_producto }}"
+                            data-nombre="{{ p.nombre }}"
+                            data-precio="{{ p.precio|int }}"
+                            onclick="agregar(this)">
+                            Agregar al carrito
+                        </button>
 
-    <h2 class="titulo-categoria">Salados</h2>
+                    </div>
 
-    <div class="contenedor">
+                {% endfor %}
 
-        <div class="producto">
-            <img src="https://snapcalorie-webflow-website.s3.us-east-2.amazonaws.com/media/food_pics_v2/medium/veggie_sandwich.jpg" alt="Sandwich de verduras">
-            <h3>Sandwich de Verdura</h3>
-            <p class="precio">Gs. 4.000</p>
-            <button class="boton" onclick="agregar('Sandwich de Verdura', 4000)">Agregar al carrito</button>
-        </div>
+            </div>
 
-        <div class="producto">
-            <img src="https://s.yimg.com/ny/api/res/1.2/qAJoajyEAfWxiL2oBaKdFQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTk2MDtjZj13ZWJw/https%3A/media.zenfs.com/en/parade_250/8d260067aebd3ebc8f4833b5350e76ad" alt="Empanadas">
-            <h3>Empanadas</h3>
-            <p class="precio">Gs. 5.000</p>
-            <button class="boton" onclick="agregar('Empanadas', 5000)">Agregar al carrito</button>
-        </div>
+            {% if not loop.last %}
+                <hr>
+            {% endif %}
 
-        <div class="producto">
-            <img src="https://www.robineau.co.uk/assets/images/product/2754.jpg" alt="Tarta salada">
-            <h3>Tartas</h3>
-            <p class="precio">Gs. 4.000</p>
-            <button class="boton" onclick="agregar('Tartas', 4000)">Agregar al carrito</button>
-        </div>
+        {% endfor %}
 
-        <div class="producto">
-            <img src="https://www.instacart.com/assets/domains/product-image/file/large_fbc8ce83-7f5c-4e54-8b6e-63f76864bd2c.jpg" alt="Pizza sin gluten">
-            <h3>Pizzeta Sin Gluten</h3>
-            <p class="precio">Gs. 5.000</p>
-            <button class="boton" onclick="agregar('Pizzeta Sin Gluten', 5000)">Agregar al carrito</button>
-        </div>
+    </section>
 
-    </div>
-
-    <hr>
-
-    <h2 class="titulo-categoria">Harinas</h2>
-
-    <div class="contenedor">
-
-        <div class="producto">
-            <img src="https://digitalcontent.api.tesco.com/v2/media/ghs/2872abcd-3e14-4465-8977-7fe918aa2f84/22703f29-05c0-4149-b6b3-fe7055997edf_915223545.jpeg" alt="Premezcla de pan">
-            <h3>Premezcla de Pan (500 g.)</h3>
-            <p class="precio">Gs. 25.000</p>
-            <button class="boton" onclick="agregar('Premezcla de Pan (500 kg.)', 25000)">Agregar al carrito</button>
-        </div>
-
-        <div class="producto">
-            <img src="https://digitalcontent.api.tesco.com/v2/media/ghs/2872abcd-3e14-4465-8977-7fe918aa2f84/22703f29-05c0-4149-b6b3-fe7055997edf_915223545.jpeg" alt="Premezcla de pan">
-            <h3>Premezcla de Pan (1 kg.)</h3>
-            <p class="precio">Gs. 40.000</p>
-            <button class="boton" onclick="agregar('Premezcla de Pan (1 kg.)', 40000)">Agregar al carrito</button>
-        </div>
-
-        <div class="producto">
-            <img src="Imagenes/harina de arroz.jpg" alt="Harina de arroz">
-            <h3>Harina de Arroz (500 g.)</h3>
-            <p class="precio">Gs. 12.000</p>
-            <button class="boton" onclick="agregar('Harina de Arroz (500 g.)', 12000)">Agregar al carrito</button>
-        </div>
-
-        <div class="producto">
-            <img src="Imagenes/harina de arroz.jpg" alt="Harina de arroz">
-            <h3>Harina de Arroz (1 kg.)</h3>
-            <p class="precio">Gs. 20.000</p>
-            <button class="boton" onclick="agregar('Harina de Arroz (1 kg.)', 20000)">Agregar al carrito</button>
-        </div>
-
-        <div class="producto">
-            <img src="https://rhbulk.com/cdn/shop/files/RHBulk_Yellow-Corn-Flour-Flat.jpg?v=1776446293" alt="Harina de maíz">
-            <h3>Harina de Maiz (500 g.)</h3>
-            <p class="precio">Gs. 8.000</p>
-            <button class="boton" onclick="agregar('Harina de Maiz (500 g.)', 8000)">Agregar al carrito</button>
-        </div>
-
-        <div class="producto">
-            <img src="https://rhbulk.com/cdn/shop/files/RHBulk_Yellow-Corn-Flour-Flat.jpg?v=1776446293" alt="Harina de maíz">
-            <h3>Harina de Maiz (1 kg.)</h3>
-            <p class="precio">Gs. 14.000</p>
-            <button class="boton" onclick="agregar('Harina de Maiz (1 kg.)', 14000)">Agregar al carrito</button>
-        </div>
-
-        <div class="producto">
-            <img src="https://cdn.ekokoza.com/images/0/686f8a9ab37a3126/2/micronized-rice-powder-rice-starch-5kg.webp?hash=1108330435" alt="Almidón de arroz">
-            <h3>Almidon de Arroz (500 g.)</h3>
-            <p class="precio">Gs. 6.000</p>
-            <button class="boton" onclick="agregar('Almidon de Arroz (500 g.)', 6000)">Agregar al carrito</button>
-        </div>
-
-        <div class="producto">
-            <img src="https://cdn.ekokoza.com/images/0/686f8a9ab37a3126/2/micronized-rice-powder-rice-starch-5kg.webp?hash=1108330435" alt="Almidón de arroz">
-            <h3>Almidon de Arroz (1 kg.)</h3>
-            <p class="precio">Gs. 11.000</p>
-            <button class="boton" onclick="agregar('Harina de Arroz (1 kg.)', 11000)">Agregar al carrito</button>
-        </div>
-
-        <div class="producto">
-            <img src="Imagenes/almidon de mandioca.jpg" alt="Almidón de mandioca">
-            <h3>Almidon de Mandioca (500 g.)</h3>
-            <p class="precio">Gs. 6.500</p>
-            <button class="boton" onclick="agregar('Almidon de Mandioca (500 g.)', 6500)">Agregar al carrito</button>
-        </div>
-
-        <div class="producto">
-            <img src="Imagenes/almidon de mandioca.jpg" alt="Almidón de mandioca">
-            <h3>Almidon de Mandioca (1 kg.)</h3>
-            <p class="precio">Gs. 11.000</p>
-            <button class="boton" onclick="agregar('Almidon de Mandioca (1 kg.)', 11000)">Agregar al carrito</button>
-        </div>
-
-    </div>
-</section>
+    <!-- CARRITO -->
 
     <section class="carrito" id="carrito">
+
         <h2>Mi carrito</h2>
 
         <div class="carrito-lista">
+
             <div id="carrito-items">
-                <p class="carrito-vacio">Tu carrito está vacío.</p>
+                <p class="carrito-vacio">
+                    Tu carrito está vacío.
+                </p>
             </div>
 
             <div class="carrito-total">
@@ -549,22 +1002,44 @@
                 <span id="carrito-total">Gs. 0</span>
             </div>
 
+            <!-- MENSAJE DE ERROR -->
+
+            <p id="error-carrito" class="error-carrito" role="alert">
+                Agrega al menos un producto para continuar.
+            </p>
+
             <div class="carrito-acciones">
-                <a href="pago.html" id="btn-pagar" class="boton" style="margin-right: 10px; text-decoration: none;">
+
+                <a
+                    href="pago.html"
+                    id="btn-pagar"
+                    class="boton"
+                    style="margin-right: 10px; text-decoration: none;">
                     Ir a pagar
                 </a>
-                <button class="boton boton-secundario" onclick="vaciarCarrito()">
+
+                <button
+                    class="boton boton-secundario"
+                    onclick="vaciarCarrito()">
                     Vaciar carrito
                 </button>
+
             </div>
+
         </div>
+
     </section>
 
+    <!-- CONTACTO -->
+
     <section class="contacto" id="contacto">
+
         <h2>Contáctanos</h2>
+
         <p>Estamos aquí para ayudarte.</p>
         <p>Email: contacto@tiendasingluten.com</p>
         <p>Telefono: 0981 234567</p>
+
     </section>
 
     <footer>
@@ -572,51 +1047,120 @@
         <p>Todos los derechos reservados.</p>
     </footer>
 
-    <div class="modal-fondo" id="modal-cuenta" onclick="if(event.target===this) cerrarCuenta()">
+    <!-- VENTANA DE CUENTA -->
+
+    <div
+        class="modal-fondo"
+        id="modal-cuenta"
+        onclick="if(event.target===this) cerrarCuenta()">
+
         <div class="modal">
-            <button class="modal-cerrar" onclick="cerrarCuenta()">×</button>
+
+            <button
+                class="modal-cerrar"
+                onclick="cerrarCuenta()">
+                ×
+            </button>
 
             <div class="modal-pistas" id="modal-pistas">
 
-                <!-- Ventana 1: Mi cuenta -->
+                <!-- VENTANA 1: MI CUENTA -->
+
                 <div class="modal-vista">
+
                     <h3>Mi cuenta</h3>
+
                     <div class="avatar" id="cuenta-avatar">?</div>
-                    <p class="etiqueta">Sesión iniciada como</p>
-                    <p class="nombre-usuario" id="cuenta-usuario">Invitado</p>
-                    <p class="etiqueta" id="cuenta-telefono" style="margin: -18px 0 25px;"></p>
-                    <button class="boton boton-rojo" onclick="mostrarConfirmacion()">Cerrar sesión</button>
+
+                    <p class="etiqueta">
+                        Sesión iniciada como
+                    </p>
+
+                    <p class="nombre-usuario" id="cuenta-usuario">
+                        Invitado
+                    </p>
+
+                    <p
+                        class="etiqueta"
+                        id="cuenta-telefono"
+                        style="margin: -18px 0 25px;">
+                    </p>
+
+                    <button
+                        class="boton boton-rojo"
+                        onclick="mostrarConfirmacion()">
+                        Cerrar sesión
+                    </button>
+
                 </div>
 
-                <!-- Ventana 2: Confirmación -->
+                <!-- VENTANA 2: CONFIRMACIÓN -->
+
                 <div class="modal-vista">
+
                     <h3>¿Cerrar sesión?</h3>
-                    <p>¿Estás seguro de que quieres cerrar sesión?</p>
+
+                    <p>
+                        ¿Estás seguro de que quieres cerrar sesión?
+                    </p>
+
                     <div class="confirmar-botones">
-                        <button class="boton boton-rojo" onclick="cerrarSesion()">Sí, cerrar sesión</button>
-                        <button class="boton boton-secundario" onclick="volverCuenta()">No</button>
+
+                        <button
+                            class="boton boton-rojo"
+                            onclick="cerrarSesion()">
+                            Sí, cerrar sesión
+                        </button>
+
+                        <button
+                            class="boton boton-secundario"
+                            onclick="volverCuenta()">
+                            No
+                        </button>
+
                     </div>
+
                 </div>
 
             </div>
+
         </div>
+
     </div>
 
     <script>
-        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        /* CARRITO */
+
+        let carrito = (
+            JSON.parse(localStorage.getItem('carrito')) || []
+        ).filter(i => i.cod);
 
         function formatearPrecio(numero) {
-            return 'Gs. ' + numero.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            return 'Gs. ' + numero.toString().replace(
+                /\B(?=(\d{3})+(?!\d))/g,
+                '.'
+            );
         }
 
         function guardarCarrito() {
-            localStorage.setItem('carrito', JSON.stringify(carrito));
+            localStorage.setItem(
+                'carrito',
+                JSON.stringify(carrito)
+            );
+
             mostrarCarrito();
         }
 
-        function agregar(producto, precio) {
-            carrito.push({ nombre: producto, precio: precio });
+        function agregar(boton) {
+            carrito.push({
+                cod: Number(boton.dataset.cod),
+                nombre: boton.dataset.nombre,
+                precio: Number(boton.dataset.precio)
+            });
+
             guardarCarrito();
+
+            mostrarNotificacion(1, boton.dataset.nombre);
         }
 
         function eliminar(indice) {
@@ -630,68 +1174,293 @@
         }
 
         function mostrarCarrito() {
-            const contenedor = document.getElementById('carrito-items');
+
+            const contenedor = document.getElementById(
+                'carrito-items'
+            );
+
             contenedor.innerHTML = '';
 
             if (carrito.length === 0) {
-                contenedor.innerHTML = '<p class="carrito-vacio">Tu carrito está vacío.</p>';
+
+                contenedor.innerHTML =
+                    '<p class="carrito-vacio">' +
+                    'Tu carrito está vacío.' +
+                    '</p>';
+
+            } else {
+
+                document.getElementById(
+                    'error-carrito'
+                ).style.display = 'none';
+
             }
 
             let total = 0;
 
             carrito.forEach((item, i) => {
+
                 total += item.precio;
 
                 const div = document.createElement('div');
+
                 div.className = 'carrito-item';
+
                 div.innerHTML = `
                     <span>${item.nombre}</span>
                     <span>${formatearPrecio(item.precio)}</span>
-                    <button onclick="eliminar(${i})">Quitar</button>
+                    <button onclick="eliminar(${i})">
+                        Quitar
+                    </button>
                 `;
+
                 contenedor.appendChild(div);
+
             });
 
-            document.getElementById('carrito-total').textContent = formatearPrecio(total);
-            document.getElementById('contador-carrito').textContent = carrito.length;
+            document.getElementById(
+                'carrito-total'
+            ).textContent = formatearPrecio(total);
+
+            document.getElementById(
+                'contador-carrito'
+            ).textContent = carrito.length;
+
         }
 
-        // VENTANA DE CUENTA
-        function abrirCuenta() {
-            const sesion = JSON.parse(localStorage.getItem('sesion'));
+        /* VALIDAR ANTES DE IR A PAGAR */
 
-            // Si no hay sesión iniciada, lo mandamos al login
-            if (!sesion) {
-                window.location.href = 'registro.html';
+        // Comprobar el carrito y la sesión antes de pagar.
+        
+        document.getElementById('btn-pagar').addEventListener('click', async function (e) {
+            e.preventDefault();
+
+            if (carrito.length === 0) {
+                document.getElementById('error-carrito').style.display = 'block';
                 return;
             }
 
-            document.getElementById('cuenta-usuario').textContent = sesion.nombre;
-            document.getElementById('cuenta-telefono').textContent = sesion.telefono;
-            document.getElementById('cuenta-avatar').textContent = sesion.nombre.charAt(0).toUpperCase();
-            document.getElementById('modal-pistas').classList.remove('confirmando');
-            document.getElementById('modal-cuenta').classList.add('abierto');
+            document.getElementById('error-carrito').style.display = 'none';
+
+            try {
+                const respuesta = await fetch('/api/cuenta');
+
+                if (respuesta.ok) {
+                    window.location.href = '/pago';
+                    return;
+                }
+
+                abrirAutenticacion("pago");
+
+            } catch (error) {
+                alert('No se pudo comprobar tu sesión. Inténtalo de nuevo.');
+            }
+        });
+
+        // Cerrar la ventana de autenticación.
+        function abrirAutenticacion() {
+            const modal = document.getElementById('modal-autenticacion');
+
+            modal.classList.add('abierto');
+            modal.classList.add('visible');
+            modal.dataset.origen = origen;
+        }
+
+        function abrirAutenticacion(origen = "cuenta") {
+            const modal = document.getElementById("modal-autenticacion");
+
+            modal.dataset.origen = origen;
+            modal.classList.add("abierto");
+
+            requestAnimationFrame(() => {
+                modal.classList.add("visible");
+            });
+        }
+
+        function cerrarAutenticacion() {
+            const modal = document.getElementById("modal-autenticacion");
+
+            modal.classList.remove("visible");
+
+            setTimeout(() => {
+                modal.classList.remove("abierto");
+            }, 250);
+        }
+
+        /* MODO OSCURO */
+        
+        function aplicarTema(oscuro) {
+            document.body.classList.toggle('modo-oscuro', oscuro);
+
+            const botonTema = document.getElementById('btn-tema');
+            const iconoTema = document.getElementById('icono-tema');
+
+            if (oscuro) {
+                // Sol: al pulsarlo, cambia al modo claro.
+                iconoTema.innerHTML = `
+                    <circle cx="12" cy="12" r="4"/>
+                    <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42
+                    m11.3 11.3 1.42 1.42M2 12h2m16 0h2
+                    M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>
+                `;
+                botonTema.title = 'Cambiar a modo claro';
+                botonTema.setAttribute('aria-label', 'Cambiar a modo claro');
+            } else {
+                // Luna: al pulsarlo, cambia al modo oscuro.
+                iconoTema.innerHTML = `
+                    <path d="M20.9 13A9 9 0 0 1 11 3.1
+                    9 9 0 1 0 20.9 13Z"/>
+                `;
+                botonTema.title = 'Cambiar a modo oscuro';
+                botonTema.setAttribute('aria-label', 'Cambiar a modo oscuro');
+            }
+        }
+
+        function cambiarTema() {
+            const oscuro = !document.body.classList.contains('modo-oscuro');
+
+            aplicarTema(oscuro);
+            localStorage.setItem('tema-oscuro', oscuro ? 'true' : 'false');
+        }
+
+        /* RESTAURAR EL TEMA ELEGIDO */
+
+        const temaInicial = localStorage.getItem('tema-oscuro') === 'true';
+        aplicarTema(localStorage.getItem('tema-oscuro') === 'true');
+
+        /* VENTANA DE CUENTA */
+
+        async function abrirCuenta() {
+
+            const respuesta = await fetch('/api/cuenta');
+
+            // Si no hay sesión iniciada, abrir la ventana de registro.
+
+            if (!respuesta.ok) {
+                abrirAutenticacion("cuenta");
+                return;
+            }
+
+            const cuenta = await respuesta.json();
+
+            document.getElementById(
+                'cuenta-usuario'
+            ).textContent = cuenta.nombre;
+
+            document.getElementById(
+                'cuenta-telefono'
+            ).textContent = cuenta.telefono;
+
+            document.getElementById(
+                'cuenta-avatar'
+            ).textContent = cuenta.nombre.charAt(0).toUpperCase();
+
+            document.getElementById(
+                'modal-pistas'
+            ).classList.remove('confirmando');
+
+            document.getElementById(
+                'modal-cuenta'
+            ).classList.add('abierto');
+
         }
 
         function cerrarCuenta() {
-            document.getElementById('modal-cuenta').classList.remove('abierto');
+
+            document.getElementById(
+                'modal-cuenta'
+            ).classList.remove('abierto');
+
         }
 
         function mostrarConfirmacion() {
-            document.getElementById('modal-pistas').classList.add('confirmando');
+
+            document.getElementById(
+                'modal-pistas'
+            ).classList.add('confirmando');
+
         }
 
         function volverCuenta() {
-            document.getElementById('modal-pistas').classList.remove('confirmando');
+
+            document.getElementById(
+                'modal-pistas'
+            ).classList.remove('confirmando');
+
         }
 
-        function cerrarSesion() {
-            localStorage.removeItem('sesion');
-            window.location.href = 'registro.html';
+        async function cerrarSesion() {
+            await fetch('/api/logout', {
+                method: 'POST'
+            });
+
+            window.location.href = '/';
         }
-        // Muestra el carrito al cargar la página
+
+        /* MOSTRAR EL CARRITO AL CARGAR LA PÁGINA */
+
         mostrarCarrito();
+
+
+        /* ===== NOTIFICACIÓN DEL CARRITO ===== */
+
+        let temporizadorNotificacion;
+        let versionNotificacion = 0;
+
+        function mostrarNotificacion(cantidad, nombreProducto) {
+            const notificacion = document.getElementById(
+                "notificacion-carrito"
+            );
+
+            const texto = notificacion.querySelector(
+                ".texto-notificacion"
+            );
+
+            clearTimeout(temporizadorNotificacion);
+
+            const versionActual = ++versionNotificacion;
+
+            texto.textContent =
+                `Se agregó ${cantidad} ${nombreProducto} al carrito`;
+
+            notificacion.classList.remove("visible");
+
+            // Permite reiniciar la animación cuando se repite rápidamente.
+            void notificacion.offsetWidth;
+
+            notificacion.classList.add("visible");
+
+            // Visible durante 1,5 segundos antes de bajar.
+            temporizadorNotificacion = setTimeout(() => {
+                if (versionActual === versionNotificacion) {
+                    notificacion.classList.remove("visible");
+                }
+            }, 1500);
+        }
     </script>
 
+    <!-- Ventana de registro e inicio de sesión -->
+    <div class="modal-fondo" id="modal-autenticacion"
+        onclick="if (event.target === this) cerrarAutenticacion()">
+
+        <div class="modal modal-autenticacion">
+            <button type="button"
+                    class="modal-cerrar"
+                    onclick="cerrarAutenticacion()">
+                ×
+            </button>
+
+            <iframe
+                id="iframe-autenticacion"
+                src="/registro"
+                title="Iniciar sesión o registrarse">
+            </iframe>
+        </div>
+    </div>
+
+    <div id="notificacion-carrito" role="status" aria-live="polite">
+        <span class="icono-notificacion">✓</span>
+        <span class="texto-notificacion"></span>
+    </div>
 </body>
 </html>
