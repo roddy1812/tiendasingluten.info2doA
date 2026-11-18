@@ -183,14 +183,205 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ===== ANIMACIONES DE PAGO ===== */
+
+        button,
+        .boton,
+        input[type="submit"] {
+            transition:
+                background-color 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        button:hover,
+        .boton:hover,
+        input[type="submit"]:hover {
+            transform: scale(1.025);
+            filter: brightness(1.08);
+        }
+
+        button:active,
+        .boton:active,
+        input[type="submit"]:active {
+            transform: scale(0.98);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            button,
+            .boton,
+            input[type="submit"] {
+                transition: none;
+            }
+        }
+
+
+        /* ===== TEMA OSCURO ===== */
+
+        body.tema-oscuro {
+            background-color: #151915;
+            color: #e8eee8;
+        }
+
+        .tema-oscuro header {
+            background-color: #1d3829;
+            color: #ffffff;
+        }
+
+        .tema-oscuro .card {
+            background-color: #222922;
+            color: #e8eee8;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, .25);
+        }
+
+        .tema-oscuro h2,
+        .tema-oscuro .formulario h2,
+        .tema-oscuro .total {
+            color: #a9d5b2;
+        }
+
+        .tema-oscuro .pestanas {
+            border-bottom-color: #3b493d;
+        }
+
+        .tema-oscuro .pestana {
+            color: #b9c4ba;
+        }
+
+        .tema-oscuro .pestana.activa {
+            color: #a9d5b2;
+            border-bottom-color: #a9d5b2;
+        }
+
+        .tema-oscuro input:not([type="checkbox"]):not([type="radio"]) {
+            background-color: #171d18;
+            color: #f1f5f1;
+            border-color: #4b594d;
+        }
+
+        .tema-oscuro input::placeholder {
+            color: #a0aaa1;
+        }
+
+        .tema-oscuro .boton-ojo {
+            color: #a9d5b2;
+        }
+
+        .tema-oscuro .item {
+            border-bottom-color: #3a443b;
+        }
+
+        .tema-oscuro .metodo {
+            border-color: #48574a;
+            background-color: #252e26;
+            color: #e8eee8;
+        }
+
+        .tema-oscuro .metodo.activo {
+            border-color: #8cbd97;
+            background-color: #304936;
+        }
+
+        .tema-oscuro .panel {
+            background-color: #1a211b;
+            color: #e8eee8;
+        }
+
+        .tema-oscuro .mensaje.exito {
+            background-color: #263e2b;
+            color: #bce5c3;
+        }
+
+        .tema-oscuro .mensaje.error,
+        .tema-oscuro .campo input.invalido {
+            background-color: #3b2422;
+            color: #ffb9b2;
+        }
+
+        .tema-oscuro .campo input.invalido {
+            border-color: #e16b61;
+        }
+
+        .tema-oscuro a {
+            color: #a9d5b2;
+        }
+
+        .tema-oscuro .error,
+        .tema-oscuro .error-campo {
+            color: #ffaaa3;
+        }
+
+        .tema-oscuro .boton {
+            background-color: #477b55;
+            color: #ffffff;
+        }
+
+        .tema-oscuro .boton:disabled {
+            background-color: #555d56;
+        }
+
+        .tema-oscuro .boton-ojo:hover,
+        .tema-oscuro .pestana:hover {
+            filter: brightness(1.2);
+        }
+
+        .boton-tema {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 9px;
+            color: #ffffff;
+            background: transparent;
+            border: 1px solid #ffffff;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .boton-tema svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .acciones-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .acciones-header {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
     </style>
 </head>
 
 <body>
-
     <header>
         <h1>Tienda Sin Gluten</h1>
-        <a href="inicio.html">← Volver a la tienda</a>
+
+        <div class="acciones-header">
+            <button type="button" id="btn-tema"
+                    class="boton-tema"
+                    aria-label="Activar modo oscuro"
+                    title="Cambiar tema">
+                <svg id="icono-tema" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true">
+                    <path d="M20.9 13A9 9 0 0 1 11 3.1
+                            9 9 0 1 0 20.9 13z"/>
+                </svg>
+            </button>
+
+            <a href="/">← Volver a la tienda</a>
+        </div>
     </header>
 
     <main>
@@ -314,15 +505,8 @@
     </main>
 
     <script>
-        // Si no hay sesión iniciada, enviar al login y volver aquí después
-        if (!localStorage.getItem('sesion')) {
-            window.location.href = 'login.html?redirigir=pago.html';
-        }
-
-        const sesion = JSON.parse(localStorage.getItem('sesion'));
-        const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-        const usuario = sesion ? usuarios.find(u => u.telefono === sesion.telefono) : null;
-        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        let usuario = null;
+        const carrito = (JSON.parse(localStorage.getItem('carrito')) || []).filter(i => i.cod);
         let total = 0;
 
         function formatearPrecio(numero) {
@@ -345,7 +529,7 @@
             const contenedor = document.getElementById('resumen-items');
 
             if (carrito.length === 0) {
-                contenedor.innerHTML = '<p>Tu carrito está vacío. <a href="index.html">Volver a la tienda</a></p>';
+                contenedor.innerHTML = '<p>Tu carrito está vacío. <a href="inicio.html">Volver a la tienda</a></p>';
                 document.getElementById('btn-confirmar').disabled = true;
                 return;
             }
@@ -421,11 +605,12 @@
             return '';
         }
 
-        // Confirmar pago
-        document.getElementById('btn-confirmar').addEventListener('click', () => {
+                // Confirmar pago
+        document.getElementById('btn-confirmar').addEventListener('click', async () => {
             const metodo = document.querySelector('input[name="metodo"]:checked').value;
             const error = validar(metodo);
             const errorBox = document.getElementById('error');
+            const boton = document.getElementById('btn-confirmar');
 
             if (error) {
                 errorBox.textContent = error;
@@ -433,19 +618,49 @@
                 return;
             }
 
-            const numeroPedido = Math.floor(10000 + Math.random() * 90000);
-            let mensaje = `Pedido N° ${numeroPedido}. `;
+            // Se mandan códigos y cantidades; el servidor calcula el total con los precios de la base
+            const cantidades = {};
+            carrito.forEach(item => {
+                cantidades[item.cod] = (cantidades[item.cod] || 0) + 1;
+            });
+
+            boton.disabled = true;
+            let pedido;
+
+            try {
+                const respuesta = await fetch('/api/pedido', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        items: Object.entries(cantidades).map(([cod, cantidad]) => ({ cod: Number(cod), cantidad })),
+                        metodo: metodo,
+                        direccion_entrega: document.getElementById('direccion-entrega').value.trim(),
+                        telefono_tigo: document.getElementById('telefono-tigo').value.trim()
+                    })
+                });
+                pedido = await respuesta.json().catch(() => ({}));
+
+                if (!respuesta.ok) throw new Error(pedido.error || 'No pudimos registrar tu pedido.');
+            } catch (e) {
+                errorBox.textContent = e.message;
+                errorBox.style.display = 'block';
+                boton.disabled = false;
+                return;
+            }
+
+            let mensaje = `Pedido N° ${pedido.codigo}. `;
+            const totalPedido = formatearPrecio(pedido.total);
 
             if (metodo === 'transferencia') {
-                mensaje += `Realiza la transferencia por ${formatearPrecio(total)} y envía el comprobante a contacto@singluten.com.`;
+                mensaje += `Realiza la transferencia por ${totalPedido} y envía el comprobante a contacto@singluten.com.`;
             } else if (metodo === 'tarjeta') {
                 const ultimos = document.getElementById('numero-tarjeta').value.replace(/\s/g, '').slice(-4);
-                mensaje += `Pago de ${formatearPrecio(total)} con tarjeta terminada en ${ultimos} (simulado).`;
+                mensaje += `Pago de ${totalPedido} con tarjeta terminada en ${ultimos} (simulado).`;
             } else if (metodo === 'tigo') {
                 const telefono = document.getElementById('telefono-tigo').value.trim();
-                mensaje += `Enviamos una solicitud de pago de ${formatearPrecio(total)} al número ${telefono} (simulado).`;
+                mensaje += `Enviamos una solicitud de pago de ${totalPedido} al número ${telefono} (simulado).`;
             } else {
-                mensaje += `Pagarás ${formatearPrecio(total)} en efectivo al recibir tu pedido.`;
+                mensaje += `Pagarás ${totalPedido} en efectivo al recibir tu pedido.`;
             }
 
             localStorage.removeItem('carrito');
@@ -468,28 +683,99 @@
         campoEntrega.addEventListener('input', () => {
             checkDireccion.checked = false;
         });
-
+        
         const campoTigo = document.getElementById('telefono-tigo');
         const checkTelefono = document.getElementById('usar-telefono-registrado');
 
-        // Al marcar la casilla, se copia el teléfono de la cuenta. Al desmarcarla, se borra el campo.
+        campoTigo.value = '';
+
+        // Al marcar la casilla, copiar el teléfono de la cuenta.
         checkTelefono.addEventListener('change', () => {
-            campoTigo.value = checkTelefono.checked && sesion ? sesion.telefono : '';
+            campoTigo.value = checkTelefono.checked && usuario
+                ? usuario.telefono
+                : '';
         });
 
-        // Si el cliente edita el número a mano, la casilla se desmarca.
+        // Si el usuario modifica el teléfono, desmarcar la casilla.
         campoTigo.addEventListener('input', () => {
             checkTelefono.checked = false;
         });
 
-        mostrarDatosCliente();
-        mostrarResumen();
+
+        async function iniciar() {
+            try {
+                const respuesta = await fetch('/api/cuenta');
+
+                if (!respuesta.ok) {
+                    window.location.href = '/';
+                    return;
+                }
+
+                usuario = await respuesta.json();
+
+                mostrarDatosCliente();
+                mostrarResumen();
+
+                if (usuario.direccion) {
+                    campoEntrega.value = usuario.direccion;
+                    checkDireccion.checked = true;
+                }
+
+                if (usuario.telefono) {
+                    campoTigo.value = usuario.telefono;
+                    checkTelefono.checked = true;
+                }
+            } catch (error) {
+                console.error('Error al cargar los datos del cliente:', error);
+            }
+        }
+
+        iniciar();
 
         function limpiarDatosPago() {
             ['numero-tarjeta', 'nombre-tarjeta', 'vencimiento', 'cvv', 'telefono-tigo']
                 .forEach(id => document.getElementById(id).value = '');
         }
-    </script>
 
+        function abrirAutenticacion() {
+            const modal = document.getElementById("modal-autenticacion");
+
+            modal.classList.add("visible");
+        }
+
+        function cerrarAutenticacion() {
+            const modal = document.getElementById("modal-autenticacion");
+
+            modal.classList.remove("visible");
+        }
+
+        function aplicarTema(oscuro) {
+            document.body.classList.toggle('tema-oscuro', oscuro);
+
+            const boton = document.getElementById('btn-tema');
+            const icono = document.getElementById('icono-tema');
+
+            if (boton && icono) {
+                boton.setAttribute(
+                    'aria-label',
+                    oscuro ? 'Activar modo claro' : 'Activar modo oscuro'
+                );
+
+                icono.innerHTML = oscuro
+                    ? '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path>'
+                    : '<path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13z"></path>';
+            }
+        }
+
+        aplicarTema(localStorage.getItem('tema-oscuro') === 'true');
+
+        document.getElementById('btn-tema').addEventListener('click', () => {
+            const oscuro = !document.body.classList.contains('tema-oscuro');
+
+            localStorage.setItem('tema-oscuro', oscuro);
+            aplicarTema(oscuro);
+        });
+
+    </script>
 </body>
 </html>
