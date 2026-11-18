@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Sin Gluten | Pago</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f8f2;
+            color: #333;
+        }
+
+        header {
+            background-color: #315c43;
+            color: white;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 26px;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            gap: 25px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            font-size: 22px;
+            color: #315c43;
+            margin-bottom: 18px;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 20px;
+            color: #315c43;
+            margin-top: 15px;
+        }
+
+        .metodos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .metodo {
+            border: 2px solid #d5dfc9;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .metodo input {
+            accent-color: #315c43;
+        }
+
+        .metodo.activo {
+            border-color: #315c43;
+            background-color: #e6eddf;
+        }
+
+        .panel {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8f8f2;
+            border-radius: 8px;
+        }
+
+        .panel.activo {
+            display: block;
+        }
+
+        .panel label {
+            display: block;
+            margin: 12px 0 5px;
+            font-size: 14px;
+        }
+
+        .panel input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        .panel p {
+            margin: 6px 0;
+            line-height: 1.5;
+        }
+
+        .fila {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .boton {
+            background-color: #315c43;
+            color: white;
+            padding: 13px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .boton:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
+
+        .acciones {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .error {
+            color: #c0392b;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .oculto {
+            display: none;
+        }
+
+        #confirmacion {
+            text-align: center;
+        }
+
+        #confirmacion a {
+            color: #315c43;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .fila {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== ANIMACIONES DE PAGO ===== */
+
+        button,
+        .boton,
+        input[type="submit"] {
+            transition:
+                background-color 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        button:hover,
+        .boton:hover,
+        input[type="submit"]:hover {
+            transform: scale(1.025);
+            filter: brightness(1.08);
+        }
+
+        button:active,
+        .boton:active,
+        input[type="submit"]:active {
+            transform: scale(0.98);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            button,
+            .boton,
+            input[type="submit"] {
+                transition: none;
+            }
+        }
+
+
+        /* ===== TEMA OSCURO ===== */
+
+        body.tema-oscuro {
+            background-color: #151915;
+            color: #e8eee8;
+        }
+
+        .tema-oscuro header {
+            background-color: #1d3829;
+            color: #ffffff;
+        }
+
+        .tema-oscuro .card {
+            background-color: #222922;
+            color: #e8eee8;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, .25);
+        }
+
+        .tema-oscuro h2,
+        .tema-oscuro .formulario h2,
+        .tema-oscuro .total {
+            color: #a9d5b2;
+        }
+
+        .tema-oscuro .pestanas {
+            border-bottom-color: #3b493d;
+        }
+
+        .tema-oscuro .pestana {
+            color: #b9c4ba;
+        }
+
+        .tema-oscuro .pestana.activa {
+            color: #a9d5b2;
+            border-bottom-color: #a9d5b2;
+        }
+
+        .tema-oscuro input:not([type="checkbox"]):not([type="radio"]) {
+            background-color: #171d18;
+            color: #f1f5f1;
+            border-color: #4b594d;
+        }
+
+        .tema-oscuro input::placeholder {
+            color: #a0aaa1;
+        }
+
+        .tema-oscuro .boton-ojo {
+            color: #a9d5b2;
+        }
+
+        .tema-oscuro .item {
+            border-bottom-color: #3a443b;
+        }
+
+        .tema-oscuro .metodo {
+            border-color: #48574a;
+            background-color: #252e26;
+            color: #e8eee8;
+        }
+
+        .tema-oscuro .metodo.activo {
+            border-color: #8cbd97;
+            background-color: #304936;
+        }
+
+        .tema-oscuro .panel {
+            background-color: #1a211b;
+            color: #e8eee8;
+        }
+
+        .tema-oscuro .mensaje.exito {
+            background-color: #263e2b;
+            color: #bce5c3;
+        }
+
+        .tema-oscuro .mensaje.error,
+        .tema-oscuro .campo input.invalido {
+            background-color: #3b2422;
+            color: #ffb9b2;
+        }
+
+        .tema-oscuro .campo input.invalido {
+            border-color: #e16b61;
+        }
+
+        .tema-oscuro a {
+            color: #a9d5b2;
+        }
+
+        .tema-oscuro .error,
+        .tema-oscuro .error-campo {
+            color: #ffaaa3;
+        }
+
+        .tema-oscuro .boton {
+            background-color: #477b55;
+            color: #ffffff;
+        }
+
+        .tema-oscuro .boton:disabled {
+            background-color: #555d56;
+        }
+
+        .tema-oscuro .boton-ojo:hover,
+        .tema-oscuro .pestana:hover {
+            filter: brightness(1.2);
+        }
+
+        .boton-tema {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 9px;
+            color: #ffffff;
+            background: transparent;
+            border: 1px solid #ffffff;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .boton-tema svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .acciones-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .acciones-header {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Tienda Sin Gluten</h1>
+
+        <div class="acciones-header">
+            <button type="button" id="btn-tema"
+                    class="boton-tema"
+                    aria-label="Activar modo oscuro"
+                    title="Cambiar tema">
+                <svg id="icono-tema" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true">
+                    <path d="M20.9 13A9 9 0 0 1 11 3.1
+                            9 9 0 1 0 20.9 13z"/>
+                </svg>
+            </button>
+
+            <a href="/">← Volver a la tienda</a>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- RESUMEN DEL PEDIDO -->
+        <section class="card" id="resumen">
+            <h2>Resumen del pedido</h2>
+            <div id="resumen-items"></div>
+            <div class="total">
+                <span>Total:</span>
+                <span id="resumen-total">Gs. 0</span>
+            </div>
+        </section>
+
+        <!-- DATOS DEL CLIENTE -->
+        <section class="card" id="datos-cliente">
+            <h2>Datos del cliente</h2>
+            <div id="datos-items"></div>
+        </section>
+
+        <!-- DIRECCIÓN DE ENTREGA -->
+        <section class="card" id="seccion-entrega">
+            <h2>Dirección de entrega</h2>
+
+            <div class="panel activo">
+                <label for="direccion-entrega">Dirección de entrega</label>
+                <input type="text" id="direccion-entrega" placeholder="Calle, número, barrio, ciudad" autocomplete="street-address">
+
+                <label style="display: flex; align-items: center; gap: 8px; margin-top: 12px;">
+                    <input type="checkbox" id="usar-direccion-registrada" style="width: auto;">
+                    Usar la dirección de mi cuenta
+                </label>
+            </div>
+        </section>
+
+        <!-- MÉTODO DE PAGO -->
+        <section class="card" id="seccion-pago">
+            <h2>Elige un método de pago</h2>
+
+            <div class="metodos">
+                <label class="metodo activo">
+                    <input type="radio" name="metodo" value="transferencia" checked>
+                    Transferencia
+                </label>
+                <label class="metodo">
+                    <input type="radio" name="metodo" value="tarjeta">
+                    Tarjeta
+                </label>
+                <label class="metodo">
+                    <input type="radio" name="metodo" value="tigo">
+                    Tigo Money
+                </label>
+                <label class="metodo">
+                    <input type="radio" name="metodo" value="efectivo">
+                    Efectivo
+                </label>
+            </div>
+
+            <!-- Transferencia -->
+            <div class="panel activo" id="panel-transferencia">
+                <p><strong>Datos de la cuenta:</strong></p>
+                <p>Banco: Ueno Bank S.A.</p>
+                <p>Titular: Tienda Sin Gluten S.A.</p>
+                <p>Tipo de cuenta: Cuenta corriente</p>
+                <p>Número de cuenta: 000-123-456789</p>
+                <p>RUC: 80012345-6</p>
+                <p>Alias: singluten.pagos</p>
+                <p>Después de transferir, envía el comprobante a contacto@singluten.com.</p>
+            </div>
+
+            <!-- Tarjeta -->
+            <div class="panel" id="panel-tarjeta">
+                <label for="numero-tarjeta">Número de tarjeta</label>
+                <input type="text" id="numero-tarjeta" placeholder="1234 5678 9012 3456" inputmode="numeric" autocomplete="cc-number">
+
+                <label for="nombre-tarjeta">Nombre del titular</label>
+                <input type="text" id="nombre-tarjeta" placeholder="Como aparece en la tarjeta" autocomplete="cc-name">
+
+                <div class="fila">
+                    <div>
+                        <label for="vencimiento">Vencimiento (MM/AA)</label>
+                        <input type="text" id="vencimiento" placeholder="MM/AA" inputmode="numeric" autocomplete="cc-exp">
+                    </div>
+                    <div>
+                        <label for="cvv">CVV</label>
+                        <input type="password" id="cvv" placeholder="123" maxlength="4" inputmode="numeric" autocomplete="cc-csc">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tigo Money -->
+            <div class="panel" id="panel-tigo">
+                <label for="telefono-tigo">Número de celular Tigo</label>
+                <input type="tel" id="telefono-tigo" placeholder="0981234567" maxlength="10" inputmode="numeric">
+                <label style="display: flex; align-items: center; gap: 8px; margin-top: 12px;">
+                    <input type="checkbox" id="usar-telefono-registrado" style="width: auto;">
+                    Usar el número de mi cuenta
+                </label>
+                <p style="margin-top: 12px;">Recibirás una solicitud de pago en tu celular para confirmar la operación.</p>
+            </div>
+
+            <!-- Efectivo -->
+            <div class="panel" id="panel-efectivo">
+                <p>Pagarás en efectivo al momento de recibir tu pedido.</p>
+            </div>
+
+            <p class="error" id="error"></p>
+
+            <div class="acciones">
+                <button class="boton" id="btn-confirmar">Confirmar pago</button>
+            </div>
+        </section>
+
+        <!-- CONFIRMACIÓN -->
+        <section class="card oculto" id="confirmacion">
+            <h2>¡Pedido confirmado!</h2>
+            <p id="texto-confirmacion"></p>
+            <p style="margin-top: 20px;"><a href="inicio.html">Volver a la tienda</a></p>
+        </section>
+
+    </main>
+
+    <script>
+        let usuario = null;
+        const carrito = (JSON.parse(localStorage.getItem('carrito')) || []).filter(i => i.cod);
+        let total = 0;
+
+        function formatearPrecio(numero) {
+            return 'Gs. ' + numero.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+
+        // Mostrar los datos del cliente registrados y rellenar campos
+        function mostrarDatosCliente() {
+            if (!usuario) return;
+
+            document.getElementById('datos-items').innerHTML = `
+                <div class="item"><span>Nombre</span><span>${usuario.nombre} ${usuario.apellido}</span></div>
+                <div class="item"><span>Dirección</span><span>${usuario.direccion}</span></div>
+                <div class="item"><span>Teléfono</span><span>${usuario.telefono}</span></div>
+            `;
+        }
+
+        // Mostrar resumen del pedido
+        function mostrarResumen() {
+            const contenedor = document.getElementById('resumen-items');
+
+            if (carrito.length === 0) {
+                contenedor.innerHTML = '<p>Tu carrito está vacío. <a href="inicio.html">Volver a la tienda</a></p>';
+                document.getElementById('btn-confirmar').disabled = true;
+                return;
+            }
+
+            carrito.forEach(item => {
+                total += item.precio;
+                const div = document.createElement('div');
+                div.className = 'item';
+                div.innerHTML = `<span>${item.nombre}</span><span>${formatearPrecio(item.precio)}</span>`;
+                contenedor.appendChild(div);
+            });
+
+            document.getElementById('resumen-total').textContent = formatearPrecio(total);
+        }
+
+        // Cambiar de método de pago
+        function cambiarMetodo() {
+            const seleccionado = document.querySelector('input[name="metodo"]:checked').value;
+
+            document.querySelectorAll('.metodo').forEach(label => {
+                const radio = label.querySelector('input');
+                label.classList.toggle('activo', radio.checked);
+            });
+
+            document.querySelectorAll('.panel[id^="panel-"]').forEach(panel => {
+                panel.classList.remove('activo');
+            });
+
+            document.getElementById('panel-' + seleccionado).classList.add('activo');
+            document.getElementById('error').style.display = 'none';
+        }
+
+        document.querySelectorAll('input[name="metodo"]').forEach(radio => {
+            radio.addEventListener('change', cambiarMetodo);
+        });
+
+        // Formato automático para número de tarjeta
+        document.getElementById('numero-tarjeta').addEventListener('input', e => {
+            let valor = e.target.value.replace(/\D/g, '').slice(0, 16);
+            e.target.value = valor.replace(/(\d{4})(?=\d)/g, '$1 ');
+        });
+
+        // Formato automático para vencimiento
+        document.getElementById('vencimiento').addEventListener('input', e => {
+            let valor = e.target.value.replace(/\D/g, '').slice(0, 4);
+            if (valor.length > 2) {
+                valor = valor.slice(0, 2) + '/' + valor.slice(2);
+            }
+            e.target.value = valor;
+        });
+
+        // Validar según el método elegido
+        function validar(metodo) {
+            if (document.getElementById('direccion-entrega').value.trim() === '') return 'Ingresa la dirección de entrega.';
+
+            if (metodo === 'tarjeta') {
+                const numero = document.getElementById('numero-tarjeta').value.replace(/\s/g, '');
+                const nombre = document.getElementById('nombre-tarjeta').value.trim();
+                const vencimiento = document.getElementById('vencimiento').value;
+                const cvv = document.getElementById('cvv').value;
+
+                if (!/^\d{16}$/.test(numero)) return 'Ingresa un número de tarjeta de 16 dígitos.';
+                if (nombre === '') return 'Ingresa el nombre del titular.';
+                if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(vencimiento)) return 'Ingresa una fecha de vencimiento válida (MM/AA).';
+                if (!/^\d{3,4}$/.test(cvv)) return 'Ingresa un CVV válido.';
+            }
+
+            if (metodo === 'tigo') {
+                const telefono = document.getElementById('telefono-tigo').value.trim();
+                if (!/^0\d{9}$/.test(telefono)) return 'El número de celular debe tener 10 números y empezar por 0, sin espacios.';
+            }
+
+            return '';
+        }
+
+                // Confirmar pago
+        document.getElementById('btn-confirmar').addEventListener('click', async () => {
+            const metodo = document.querySelector('input[name="metodo"]:checked').value;
+            const error = validar(metodo);
+            const errorBox = document.getElementById('error');
+            const boton = document.getElementById('btn-confirmar');
+
+            if (error) {
+                errorBox.textContent = error;
+                errorBox.style.display = 'block';
+                return;
+            }
+
+            // Se mandan códigos y cantidades; el servidor calcula el total con los precios de la base
+            const cantidades = {};
+            carrito.forEach(item => {
+                cantidades[item.cod] = (cantidades[item.cod] || 0) + 1;
+            });
+
+            boton.disabled = true;
+            let pedido;
+
+            try {
+                const respuesta = await fetch('/api/pedido', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        items: Object.entries(cantidades).map(([cod, cantidad]) => ({ cod: Number(cod), cantidad })),
+                        metodo: metodo,
+                        direccion_entrega: document.getElementById('direccion-entrega').value.trim(),
+                        telefono_tigo: document.getElementById('telefono-tigo').value.trim()
+                    })
+                });
+                pedido = await respuesta.json().catch(() => ({}));
+
+                if (!respuesta.ok) throw new Error(pedido.error || 'No pudimos registrar tu pedido.');
+            } catch (e) {
+                errorBox.textContent = e.message;
+                errorBox.style.display = 'block';
+                boton.disabled = false;
+                return;
+            }
+
+            let mensaje = `Pedido N° ${pedido.codigo}. `;
+            const totalPedido = formatearPrecio(pedido.total);
+
+            if (metodo === 'transferencia') {
+                mensaje += `Realiza la transferencia por ${totalPedido} y envía el comprobante a contacto@singluten.com.`;
+            } else if (metodo === 'tarjeta') {
+                const ultimos = document.getElementById('numero-tarjeta').value.replace(/\s/g, '').slice(-4);
+                mensaje += `Pago de ${totalPedido} con tarjeta terminada en ${ultimos} (simulado).`;
+            } else if (metodo === 'tigo') {
+                const telefono = document.getElementById('telefono-tigo').value.trim();
+                mensaje += `Enviamos una solicitud de pago de ${totalPedido} al número ${telefono} (simulado).`;
+            } else {
+                mensaje += `Pagarás ${totalPedido} en efectivo al recibir tu pedido.`;
+            }
+
+            localStorage.removeItem('carrito');
+            document.getElementById('texto-confirmacion').textContent = mensaje;
+            document.getElementById('resumen').classList.add('oculto');
+            document.getElementById('datos-cliente').classList.add('oculto');
+            document.getElementById('seccion-pago').classList.add('oculto');
+            document.getElementById('confirmacion').classList.remove('oculto');
+        });
+
+        const campoEntrega = document.getElementById('direccion-entrega');
+        const checkDireccion = document.getElementById('usar-direccion-registrada');
+
+        // Al marcar la casilla, se copia la dirección del registro. Al desmarcarla, se borra el campo.
+        checkDireccion.addEventListener('change', () => {
+            campoEntrega.value = checkDireccion.checked && usuario ? usuario.direccion : '';
+        });
+
+        // Si el cliente edita la dirección a mano, la casilla se desmarca.
+        campoEntrega.addEventListener('input', () => {
+            checkDireccion.checked = false;
+        });
+        
+        const campoTigo = document.getElementById('telefono-tigo');
+        const checkTelefono = document.getElementById('usar-telefono-registrado');
+
+        campoTigo.value = '';
+
+        // Al marcar la casilla, copiar el teléfono de la cuenta.
+        checkTelefono.addEventListener('change', () => {
+            campoTigo.value = checkTelefono.checked && usuario
+                ? usuario.telefono
+                : '';
+        });
+
+        // Si el usuario modifica el teléfono, desmarcar la casilla.
+        campoTigo.addEventListener('input', () => {
+            checkTelefono.checked = false;
+        });
+
+
+        async function iniciar() {
+            try {
+                const respuesta = await fetch('/api/cuenta');
+
+                if (!respuesta.ok) {
+                    window.location.href = '/';
+                    return;
+                }
+
+                usuario = await respuesta.json();
+
+                mostrarDatosCliente();
+                mostrarResumen();
+
+                if (usuario.direccion) {
+                    campoEntrega.value = usuario.direccion;
+                    checkDireccion.checked = true;
+                }
+
+                if (usuario.telefono) {
+                    campoTigo.value = usuario.telefono;
+                    checkTelefono.checked = true;
+                }
+            } catch (error) {
+                console.error('Error al cargar los datos del cliente:', error);
+            }
+        }
+
+        iniciar();
+
+        function limpiarDatosPago() {
+            ['numero-tarjeta', 'nombre-tarjeta', 'vencimiento', 'cvv', 'telefono-tigo']
+                .forEach(id => document.getElementById(id).value = '');
+        }
+
+        function abrirAutenticacion() {
+            const modal = document.getElementById("modal-autenticacion");
+
+            modal.classList.add("visible");
+        }
+
+        function cerrarAutenticacion() {
+            const modal = document.getElementById("modal-autenticacion");
+
+            modal.classList.remove("visible");
+        }
+
+        function aplicarTema(oscuro) {
+            document.body.classList.toggle('tema-oscuro', oscuro);
+
+            const boton = document.getElementById('btn-tema');
+            const icono = document.getElementById('icono-tema');
+
+            if (boton && icono) {
+                boton.setAttribute(
+                    'aria-label',
+                    oscuro ? 'Activar modo claro' : 'Activar modo oscuro'
+                );
+
+                icono.innerHTML = oscuro
+                    ? '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path>'
+                    : '<path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13z"></path>';
+            }
+        }
+
+        aplicarTema(localStorage.getItem('tema-oscuro') === 'true');
+
+        document.getElementById('btn-tema').addEventListener('click', () => {
+            const oscuro = !document.body.classList.contains('tema-oscuro');
+
+            localStorage.setItem('tema-oscuro', oscuro);
+            aplicarTema(oscuro);
+        });
+
+    </script>
+
+</body>
+</html>

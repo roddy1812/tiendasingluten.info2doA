@@ -1,0 +1,82 @@
+
+TIENDA SIN GLUTEN — AJUSTES NECESARIOS EN singluten.py
+
+IMPORTANTE: el SQL compartido guarda la cabecera de cada compra en `pedidos` y sus líneas en `ventas`. El código actual de singluten.py intenta guardar campos de cabecera en `ventas`, y no coincide con ese esquema. Antes de usar la administración, aplica estos ajustes.
+
+1) Reemplaza la función cargar_productos por:
+
+def cargar_productos(conn):
+    cur = conn.cursor(dictionary=True)
+    cur.execute("""
+        SELECT cod_producto, nombre, precio, categoria
+        FROM productos
+        WHERE activo = 1
+        ORDER BY cod_producto
+    """)
+    productos = cur.fetchall()
+    for p in productos:
+        p["precio"] = float(p["precio"])
+    return productos
+
+2) Reemplaza la función registrar_pedido por:
+
+def registrar_pedido(conn, n_cliente, cantidades, metodo, direccion_entrega, productos):
+    """Guarda la cabecera en pedidos y los productos en ventas."""
+    cur = conn.cursor()
+    total = sum(float(productos[cod]["precio"]) * cantidad
+                for cod, cantidad in cantidades.items())
+    conn.start_transaction()
+    try:
+        cur.execute(
+            "INSERT INTO pedidos (id_comprador, id_vendedor, metodo_pago, direccion_entrega, total) "
+            "VALUES (%s, %s, %s, %s, %s)",
+            (n_cliente, ID_VENDEDOR_ONLINE, metodo, direccion_entrega, total),
+        )
+        n_pedido = cur.lastrowid
+        cur.executemany(
+            "INSERT INTO ventas (n_pedido, id_product, u_vendidas, precio_unitario) "
+            "VALUES (%s, %s, %s, %s)",
+            [(n_pedido, cod, cantidad, productos[cod]["precio"])
+             for cod, cantidad in cantidades.items()],
+        )
+        conn.commit()
+        return n_pedido
+    except Exception:
+        conn.rollback()
+        raise
+
+3) Dentro de api_pedido(), reemplaza la llamada:
+
+    codigo = registrar_pedido(conn, session["n_cliente"], cantidades, metodo, direccion)
+    return jsonify(ok=True, codigo=codigo, total=total)
+
+por:
+
+    codigo = registrar_pedido(
+        conn, session["n_cliente"], cantidades, metodo, direccion, productos
+    )
+    return jsonify(ok=True, codigo=codigo, total=total)
+
+4) En api_login(), cambia la consulta SQL a:
+
+    cur.execute(
+        "SELECT n_cliente, nombre, contrasena, activo FROM clientes WHERE telefono = %s",
+        (telefono,),
+    )
+
+Y modifica la condición que comprueba las credenciales a:
+
+    if (not fila or not fila["activo"] or not fila["contrasena"]
+            or not check_password_hash(fila["contrasena"], contrasena)):
+        return jsonify(error="Teléfono o contraseña incorrectos, o cuenta desactivada."), 401
+
+5) Sustituye TODO el bloque administrativo actual de singluten.py —desde `ADMIN_USER = ...` hasta las rutas `/pedidos` inclusive— por el contenido de admin_backend_patch.py. No lo pegues debajo del bloque antiguo porque duplicaría rutas. El bloque nuevo ya conserva las rutas de login/logout y las páginas administrativas. Debe estar ANTES del bloque final:
+
+    if __name__ == "__main__":
+        app.run(debug=True)
+
+6) Mueve el bloque `if __name__ == "__main__": app.run(debug=True)` al FINAL de singluten.py, después de todas las rutas. Si queda en medio del archivo, el servidor arranca antes de registrar las rutas de administración.
+
+7) Sustituye la plantilla pedidos.html por la incluida en esta carpeta.
+
+8) Ejecuta la migración SQL una sola vez antes de iniciar la app. No vuelvas a ejecutarla después de crear las columnas.
