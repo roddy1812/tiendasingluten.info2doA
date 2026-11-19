@@ -44,20 +44,18 @@
 
         .portada {
             position: relative;
-            isolation: isolate;
-            overflow: hidden;
+            overflow: visible;
 
-            text-align: center;
-            padding: 120px 20px;
-            min-height: 420px;
+            padding: 160px 8% 140px;
+            min-height: 520px;
 
             background-color: #000000;
             color: #ffffff;
 
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            justify-content: flex-end;
+            align-items: flex-start;
         }
 
         .portada::before {
@@ -65,13 +63,13 @@
             position: absolute;
             inset: 0;
 
-            background-image: url("/static/imagenes/fondo-sin-gluten.png");
+            background-image: url("/static/Imagenes/fondo-sin-gluten.png");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
 
             opacity: 0.2;
-            z-index: -1;
+            z-index: 0;
         }
 
         .portada h2,
@@ -81,41 +79,20 @@
             text-shadow:
                 2px 2px 4px #000000,
                 0 0 10px #000000;
-        }
-
-        .portada h2 {
-            font-size: 42px;
-            margin-bottom: 20px;
-        }
-
-        .portada p {
-            font-size: 19px;
-            line-height: 1.6;
-            max-width: 650px;
-        }
-
-        .portada .boton {
             position: relative;
             z-index: 1;
-            margin-top: 15px;
-        }
-
-
-        .portada h2,
-        .portada p {
-            color: white;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
         }
 
         .portada h2 {
-            font-size: 40px;
-            margin-bottom: 15px;
-            color: #315c43;
+            font-size: 54px;
+            margin-bottom: 18px;
+            color: #ffffff;
         }
 
         .portada p {
-            font-size: 18px;
-            margin-bottom: 25px;
+            font-size: 22px;
+            margin-bottom: 0;
+            max-width: 600px;
         }
 
         .boton {
@@ -927,9 +904,6 @@
             especialmente seleccionados para ti.
         </p>
 
-        <a href="#productos" class="boton">
-            Ver productos
-        </a>
     </section>
 
     <!-- PRODUCTOS -->
